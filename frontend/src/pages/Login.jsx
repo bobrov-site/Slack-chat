@@ -1,8 +1,34 @@
+import { Formik, Form, Field } from 'formik'
+
 const Login = () => {
     return (
-        <div>
-            hello world
-        </div>
+        <Formik
+            initialValues={{ nickname: "", password: "" }}
+            onSubmit={({ setSubmitting }) => {
+                console.log("Form is validated! Submitting the form...");
+                setSubmitting(false);
+            }}
+        >
+            <Form>
+                <div className="form-group">
+                    <label htmlFor="nickname">Никнейм</label>
+                    <Field
+                        type="text"
+                        name="nickname"
+                        className="form-control"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Пароль</label>
+                    <Field
+                        type="password"
+                        name="password"
+                        className="form-control"
+                    />
+                </div>
+                <button>Войти</button>
+            </Form>
+        </Formik>
     )
 }
 
