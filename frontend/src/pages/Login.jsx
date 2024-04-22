@@ -19,9 +19,13 @@ const Login = () => {
         initialValues={{ nickname: '', password: '' }}
         onSubmit={async (values, { setSubmitting }) => {
           const { nickname, password } = values;
+          const data = {
+            username: nickname,
+            password,
+          };
           setSubmitting(false);
           try {
-            const response = await axios.post(routes.login(), { username: nickname, password }, axiosConfig);
+            const response = await axios.post(routes.login(), data, axiosConfig);
             // response.data.token response.data.user;
             localStorage.setItem('token', response.data.token);
             return navigate('/');
