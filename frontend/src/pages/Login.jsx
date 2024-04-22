@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { Formik, Form, Field } from 'formik';
-import routes from '../routes';
 import { useNavigate } from 'react-router-dom';
+import routes from '../routes';
 // import Form from 'react-bootstrap/Form';
 const axiosConfig = {
   headers: {
-    "Content-Type" : 'application/json',
-    "Accept": "application/json"
-  }
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  },
 };
 const Login = () => {
   const navigate = useNavigate();
@@ -21,12 +21,11 @@ const Login = () => {
           const { nickname, password } = values;
           setSubmitting(false);
           try {
-            const response = await axios.post(routes.login(), { username: nickname, password: password }, axiosConfig );
+            const response = await axios.post(routes.login(), { username: nickname, password }, axiosConfig);
             // response.data.token response.data.user;
             localStorage.setItem('token', response.data.token);
             return navigate('/');
-          }
-          catch (e) {
+          } catch (e) {
             const { message } = e.response.data;
           }
         }}
@@ -54,7 +53,7 @@ const Login = () => {
         </Form>
       </Formik>
     )
-  )
+  );
 };
 
 export default Login;
