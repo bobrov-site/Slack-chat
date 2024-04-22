@@ -9,6 +9,6 @@ start-frontend:
 develop:
 	make start-backend & make start-frontend
 lint:
-	cd frontend && npx eslint .
+	make -C frontend lint
 fix:
-	cd frontend && npx eslint --fix .
+	make -C frontend fix
