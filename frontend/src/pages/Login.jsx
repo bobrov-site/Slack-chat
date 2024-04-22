@@ -31,6 +31,7 @@ const Login = () => {
             return navigate('/');
           } catch (e) {
             const { message } = e.response.data;
+            return null;
           }
         }}
       >
