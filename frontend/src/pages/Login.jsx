@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Field } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import routes from '../routes';
 // import Form from 'react-bootstrap/Form';
 const axiosConfig = {
@@ -29,6 +30,25 @@ const Login = () => {
   const navigate = useNavigate();
   const nicknameId = 'nickname';
   const passwordId = 'password';
+  const handleFormSubmit = async (values, { setSubmitting }) => {
+    const { nickname, password } = values;
+    console.log(values)
+    const data = {
+      username: nickname,
+      password,
+    };
+    setSubmitting(false);
+    try {
+      const response = await axios.post(routes.login(), data, axiosConfig)
+      // response.data.token response.data.user;
+      localStorage.setItem('token', response.data.token);
+      return navigate('/');
+    } catch (e) {
+      const { message } = e.response.data;
+      console.log(message);
+      return null;
+    }
+  }
   return (
     (
       <Container>
@@ -43,49 +63,22 @@ const Login = () => {
                 <Col xs="12" md="6">
                   <Formik
                     initialValues={{ nickname: '', password: '' }}
-                    onSubmit={async (values, { setSubmitting }) => {
-                      const { nickname, password } = values;
-                      const data = {
-                        username: nickname,
-                        password,
-                      };
-                      setSubmitting(false);
-                      try {
-                        const response = await axios.post(routes.login(), data, axiosConfig);
-                        // response.data.token response.data.user;
-                        localStorage.setItem('token', response.data.token);
-                        return navigate('/');
-                      } catch (e) {
-                        const { message } = e.response.data;
-                        console.log(message);
-                        return null;
-                      }
-                    }}
+                    onSubmit={handleFormSubmit}
                   >
-                    <Form>
-                      <h1>Войти</h1>
-                      <div className="form-group mb-3">
-                        <label htmlFor={nicknameId}>Никнейм</label>
-                        <Field
-                          required
-                          type="text"
-                          name="nickname"
-                          className="form-control"
-                          id={nicknameId}
-                        />
-                      </div>
-                      <div className="form-group mb-3">
-                        <label htmlFor={passwordId}>Пароль</label>
-                        <Field
-                          required
-                          type="password"
-                          name="password"
-                          className="form-control"
-                          id={passwordId}
-                        />
-                      </div>
-                      <Button className="w-100" variant="outline-primary">Войти</Button>
-                    </Form>
+                    {({ handleSubmit }) => (
+                      <Form onSubmit={handleSubmit} className="form">
+                        <h1>Войти</h1>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Никнейм</Form.Label>
+                          <Form.Control type="text" />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Пароль</Form.Label>
+                          <Form.Control type="password" />
+                        </Form.Group>
+                        <Button type="submit" className="w-100" variant="outline-primary">Войти</Button>
+                      </Form>
+                    )}
                   </Formik>
                 </Col>
               </Card.Body>
