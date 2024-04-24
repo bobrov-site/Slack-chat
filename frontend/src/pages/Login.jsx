@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
+import Button from 'react-bootstrap/Button';
 import routes from '../routes';
 // import Form from 'react-bootstrap/Form';
 const axiosConfig = {
@@ -62,7 +63,8 @@ const Login = () => {
                     }}
                   >
                     <Form>
-                      <div className="form-group">
+                      <h1>Войти</h1>
+                      <div className="form-group mb-3">
                         <label htmlFor={nicknameId}>Никнейм</label>
                         <Field
                           required
@@ -72,7 +74,7 @@ const Login = () => {
                           id={nicknameId}
                         />
                       </div>
-                      <div className="form-group">
+                      <div className="form-group mb-3">
                         <label htmlFor={passwordId}>Пароль</label>
                         <Field
                           required
@@ -82,7 +84,7 @@ const Login = () => {
                           id={passwordId}
                         />
                       </div>
-                      <button type="submit">Войти</button>
+                      <Button className="w-100" variant="outline-primary">Войти</Button>
                     </Form>
                   </Formik>
                 </Col>
