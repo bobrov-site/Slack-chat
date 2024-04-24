@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Formik, Form, Field } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -89,6 +89,12 @@ const Login = () => {
                   </Formik>
                 </Col>
               </Card.Body>
+              <Card.Footer className="p-4">
+                <div className="text-center">
+                  <span>Нет аккаунта?</span>
+                  <Link to="/signup">Регистрация</Link>
+                </div>
+              </Card.Footer>
             </Card>
           </Col>
         </Row>
