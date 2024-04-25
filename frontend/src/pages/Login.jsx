@@ -28,18 +28,15 @@ const axiosConfig = {
 // 8. Чтобы данные об авторизации были доступны везде в приложении можно создать для них отдельный слайс
 const Login = () => {
   const navigate = useNavigate();
-  const nicknameId = 'nickname';
-  const passwordId = 'password';
   const handleFormSubmit = async (values, { setSubmitting }) => {
     const { nickname, password } = values;
-    console.log(values)
     const data = {
       username: nickname,
       password,
     };
     setSubmitting(false);
     try {
-      const response = await axios.post(routes.login(), data, axiosConfig)
+      const response = await axios.post(routes.login(), data, axiosConfig);
       // response.data.token response.data.user;
       localStorage.setItem('token', response.data.token);
       return navigate('/');
@@ -48,7 +45,7 @@ const Login = () => {
       console.log(message);
       return null;
     }
-  }
+  };
   return (
     (
       <Container>
@@ -65,16 +62,17 @@ const Login = () => {
                     initialValues={{ nickname: '', password: '' }}
                     onSubmit={handleFormSubmit}
                   >
-                    {({ handleSubmit }) => (
+                    {({ handleSubmit, handleChange, values, errors }) => (
                       <Form onSubmit={handleSubmit} className="form">
                         <h1>Войти</h1>
                         <Form.Group className="mb-3">
                           <Form.Label>Никнейм</Form.Label>
-                          <Form.Control type="text" />
+                          <Form.Control value={values.nickname} onChange={handleChange} type="text" name="nickname" />
                         </Form.Group>
                         <Form.Group className="mb-3">
                           <Form.Label>Пароль</Form.Label>
-                          <Form.Control type="password" />
+                          <Form.Control value={values.password} onChange={handleChange} type="password" name="password" />
+                          <Form.Control.Feedback type="invalid" tooltip>{errors.nickname}</Form.Control.Feedback>
                         </Form.Group>
                         <Button type="submit" className="w-100" variant="outline-primary">Войти</Button>
                       </Form>
