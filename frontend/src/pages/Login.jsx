@@ -17,34 +17,20 @@ const axiosConfig = {
   },
 };
 
-// TODO
-// 1. Реализуйте отправку формы с данными пользователя на сервер.
-// 2. Интерфейс обработки запроса определён в файле routes.js серверной части. ✅
-// 3. Полученный от сервера токен сохраняйте в localStorage. ✅
-// 4. После успешной авторизации сделайте редирект на страницу с чатом (/). ✅
-// 5. Обработайте ошибку авторизации показом соответствующего сообщения в форме.
-// 6. Сделайте проверку существования токена в localStorage и редирект на форму входа в случае
-// его отсутствия.
-// 7. Форма Bootstrap
-// 8. Чтобы данные об авторизации были доступны везде в приложении можно создать 
-// для них отдельный слайс
 const Login = () => {
   const navigate = useNavigate();
-  const handleFormSubmit = async (values, { setSubmitting }) => {
+  const handleFormSubmit = async (values, { setErrors }) => {
     const { nickname, password } = values;
     const data = {
       username: nickname,
       password,
     };
-    setSubmitting(false);
     try {
       const response = await axios.post(routes.login(), data, axiosConfig);
-      // response.data.token response.data.user;
       localStorage.setItem('token', response.data.token);
       return navigate('/');
     } catch (e) {
-      const { message } = e.response.data;
-      console.log(message);
+      setErrors({ nickname: 'Неверные имя пользователя или пароль', password: 'Неверные имя пользователя или пароль' });
       return null;
     }
   };
@@ -69,11 +55,11 @@ const Login = () => {
                         <h1>Войти</h1>
                         <Form.Group className="mb-3">
                           <Form.Label>Никнейм</Form.Label>
-                          <Form.Control value={values.nickname} onChange={handleChange} type="text" name="nickname" />
+                          <Form.Control value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.nickname} />
                         </Form.Group>
-                        <Form.Group className="mb-3">
+                        <Form.Group className="mb-3 position-relative">
                           <Form.Label>Пароль</Form.Label>
-                          <Form.Control value={values.password} onChange={handleChange} type="password" name="password" />
+                          <Form.Control value={values.password} onChange={handleChange} type="password" name="password" isInvalid={!!errors.password} />
                           <Form.Control.Feedback type="invalid" tooltip>{errors.nickname}</Form.Control.Feedback>
                         </Form.Group>
                         <Button type="submit" className="w-100" variant="outline-primary">Войти</Button>
