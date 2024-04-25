@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Formik, Field } from 'formik';
+import { Formik } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -23,9 +23,11 @@ const axiosConfig = {
 // 3. Полученный от сервера токен сохраняйте в localStorage. ✅
 // 4. После успешной авторизации сделайте редирект на страницу с чатом (/). ✅
 // 5. Обработайте ошибку авторизации показом соответствующего сообщения в форме.
-// 6. Сделайте проверку существования токена в localStorage и редирект на форму входа в случае его отсутствия.
+// 6. Сделайте проверку существования токена в localStorage и редирект на форму входа в случае
+// его отсутствия.
 // 7. Форма Bootstrap
-// 8. Чтобы данные об авторизации были доступны везде в приложении можно создать для них отдельный слайс
+// 8. Чтобы данные об авторизации были доступны везде в приложении можно создать 
+// для них отдельный слайс
 const Login = () => {
   const navigate = useNavigate();
   const handleFormSubmit = async (values, { setSubmitting }) => {
