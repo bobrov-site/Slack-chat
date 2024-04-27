@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../slices';
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
@@ -10,8 +9,9 @@ import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { actions } from '../slices';
 import routes from '../routes';
-// import Form from 'react-bootstrap/Form';
+
 const axiosConfig = {
   headers: {
     'Content-Type': 'application/json',
