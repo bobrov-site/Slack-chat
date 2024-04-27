@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from '../slices';
 import { Formik } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
@@ -19,6 +21,7 @@ const axiosConfig = {
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleFormSubmit = async (values, { setErrors }) => {
     const { nickname, password } = values;
     const data = {
@@ -28,6 +31,7 @@ const Login = () => {
     try {
       const response = await axios.post(routes.login(), data, axiosConfig);
       localStorage.setItem('token', response.data.token);
+      dispatch(actions.setUserData({ nickname, token: response.data.token }));
       return navigate('/');
     } catch (e) {
       setErrors({ nickname: 'Неверные имя пользователя или пароль', password: 'Неверные имя пользователя или пароль' });
