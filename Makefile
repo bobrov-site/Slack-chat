@@ -1,3 +1,5 @@
+install:
+	npm ci && make -C frontend install
 build:
 	npm run build
 start:
