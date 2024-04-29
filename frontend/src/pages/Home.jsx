@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Formik } from 'formik';
 import Channels from '../components/channels/Channels';
+
 const Home = () => {
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
