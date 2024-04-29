@@ -40,7 +40,7 @@ const Home = () => {
             </div>
             <div className="mt-auto py-3 px-5">
               <Formik>
-                {({handleSubmit}) => (
+                {({ handleSubmit }) => (
                   <Form onSubmit={handleSubmit}>
                     <InputGroup>
                       <Form.Control />
