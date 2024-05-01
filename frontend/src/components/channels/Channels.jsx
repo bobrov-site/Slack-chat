@@ -3,8 +3,11 @@ import Nav from 'react-bootstrap/Nav';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { useEffect } from 'react';
+import { useGetChannelsQuery } from '../../slices/channelsSlice';
 
 const Channels = () => {
+  const data = useGetChannelsQuery();
+  console.log(data);
   useEffect(() => {
     console.log('hello');
   });
