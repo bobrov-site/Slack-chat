@@ -5,7 +5,7 @@ import useSetHeaders from '../hooks';
 export const messagesApi = createApi({
   reducerPath: 'messages',
   baseQuery: fetchBaseQuery(
-    { baseUrl: routes.messages(), prepareHeaders: useSetHeaders },
+    { baseUrl: routes.messages(), prepareHeaders: useSetHeaders, tagTypes: ['Messages'] },
   ),
   endpoints: (builder) => ({
     getMessages: builder.query({
