@@ -9,7 +9,7 @@ import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { actions } from '../slices';
+import { setUserData } from '../slices/authSlice';
 import routes from '../routes';
 
 const axiosConfig = {
@@ -31,7 +31,7 @@ const Login = () => {
     try {
       const response = await axios.post(routes.login(), data, axiosConfig);
       localStorage.setItem('token', response.data.token);
-      dispatch(actions.setUserData({ nickname, token: response.data.token }));
+      dispatch(setUserData({ nickname, token: response.data.token }));
       return navigate('/');
     } catch (e) {
       setErrors({ nickname: 'Неверные имя пользователя или пароль', password: 'Неверные имя пользователя или пароль' });
