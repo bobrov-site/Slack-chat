@@ -1,10 +1,11 @@
-import { combineReducers } from '@reduxjs/toolkit';
-import authReducer, { actions as authActions } from './authSlice.js';
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './authSlice.js';
+import { channelsApi } from './channelsSlice.js';
 
-export const rootReducer = combineReducers({
-  auth: authReducer,
+export default configureStore({
+  reducer: {
+    auth: authReducer,
+    [channelsApi.reducerPath]: channelsApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(channelsApi.middleware),
 });
-
-export const actions = {
-  ...authActions,
-};
