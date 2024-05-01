@@ -5,7 +5,7 @@ import useSetHeaders from '../hooks';
 export const channelsApi = createApi({
   reducerPath: 'channels',
   baseQuery: fetchBaseQuery(
-    { baseUrl: routes.channels(), prepareHeaders: useSetHeaders },
+    { baseUrl: routes.channels(), prepareHeaders: useSetHeaders, tagTypes: ['Channels'] },
   ),
   endpoints: (builder) => ({
     getChannels: builder.query({
