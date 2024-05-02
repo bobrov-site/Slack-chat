@@ -6,13 +6,16 @@ import store from './slices';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import { useGetMessagesQuery } from './slices/messagesSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
+  const { refetch } = useGetMessagesQuery();
   useEffect(() => {
     socket.on('newMessage', (payload) => {
       console.log('connected');
       console.log(payload);
+      // refetch();
     });
   });
   return (
