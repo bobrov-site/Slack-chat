@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   token: localStorage.getItem('token') ?? null,
+  username: '',
 };
 
 const authSlice = createSlice({
@@ -10,7 +11,7 @@ const authSlice = createSlice({
   reducers: {
     setUserData: (state, action) => {
       state.token = action.payload.token;
-      state.nickname = action.payload.nickname;
+      state.username = action.payload.nickname;
     },
   },
 });
