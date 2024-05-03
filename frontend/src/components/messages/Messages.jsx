@@ -5,13 +5,15 @@ import Form from 'react-bootstrap/Form';
 import { useSelector } from 'react-redux';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Formik } from 'formik';
+import { useEffect } from 'react';
 import { useGetMessagesQuery, useAddMessageMutation } from '../../slices/messagesSlice';
 
 const Messages = () => {
-  const { data: messages = [] } = useGetMessagesQuery();
+  const { data: messages = [], refetch } = useGetMessagesQuery();
   const username = useSelector((state) => state.auth.username);
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
   const currentChannelName = useSelector((state) => state.app.currentChannelName);
+  const filtredMessages = messages.filter((message) => message.channelId === currentChannelId);
   const [addMessage] = useAddMessageMutation();
   const handleFormSubmit = (values) => {
     const data = {};
@@ -21,7 +23,10 @@ const Messages = () => {
     data.username = username;
     addMessage(data);
   };
-  console.log(messages);
+  useEffect(() => {
+    refetch();
+    console.log(messages);
+  }, [currentChannelId, messages, refetch]);
   return (
     <Col className="p-0 h-100">
       <div className="d-flex flex-column h-100">
@@ -33,13 +38,13 @@ const Messages = () => {
             </b>
           </p>
           <span className="text-muted">
-            {messages.length}
+            {filtredMessages.length}
             {' '}
             сообщения
           </span>
         </div>
         <div className="overflow-auto px-5">
-          {messages.map((message) => (
+          {filtredMessages.map((message) => (
             <div className="text-break mb-2" key={message.id}>
               <b>{message.username}</b>
               :

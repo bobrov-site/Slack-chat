@@ -20,7 +20,7 @@ const App = () => {
     return () => {
       socket.off('newMessage');
     };
-  });
+  }, [refetch]);
   return (
     <BrowserRouter>
       <Routes>
