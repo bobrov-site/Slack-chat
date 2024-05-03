@@ -40,14 +40,11 @@ const Messages = () => {
         </div>
         <div className="overflow-auto px-5">
           {messages.map((message) => (
-            <>
-              <div className="text-break mb-2" key={message.id} />
-              <b>
-                {message.username}
-                {' '}
-              </b>
+            <div className="text-break mb-2" key={message.id}>
+              <b>{message.username}</b>
+              :
               {message.message}
-            </>
+            </div>
           ))}
         </div>
         <div className="mt-auto py-3 px-5">
