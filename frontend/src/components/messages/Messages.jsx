@@ -25,7 +25,6 @@ const Messages = () => {
   };
   useEffect(() => {
     refetch();
-    console.log(messages);
   }, [currentChannelId, messages, refetch]);
   return (
     <Col className="p-0 h-100">
