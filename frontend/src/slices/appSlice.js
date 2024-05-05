@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   currentChannelId: '1',
   currentChannelName: 'general',
+  showModal: false,
 };
 
 const appSlice = createSlice({
@@ -14,8 +15,12 @@ const appSlice = createSlice({
       state.currentChannelId = id;
       state.currentChannelName = name;
     },
+    setShowModal: (state, action) => {
+      state.showModal = action.payload;
+      console.log(state.showModal);
+    },
   },
 });
 
-export const { changeChannel } = appSlice.actions;
+export const { changeChannel, setShowModal } = appSlice.actions;
 export default appSlice.reducer;
