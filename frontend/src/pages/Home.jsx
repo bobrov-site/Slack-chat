@@ -3,6 +3,7 @@ import Row from 'react-bootstrap/esm/Row';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
 import Channels from '../components/channels/Channels';
 import Messages from '../components/messages/Messages';
 
@@ -15,12 +16,15 @@ const Home = () => {
     }
   }, [token, navigate]);
   return (
-    <Container className="rounded shadow">
-      <Row className="bg-white flex-md-row h-100">
-        <Channels />
-        <Messages />
-      </Row>
-    </Container>
+    <>
+      <Container className="rounded shadow">
+        <Row className="bg-white flex-md-row h-100">
+          <Channels />
+          <Messages />
+        </Row>
+      </Container>
+      <ToastContainer />
+    </>
   );
 };
 

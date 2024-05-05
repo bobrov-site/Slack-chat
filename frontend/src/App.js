@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import { socket } from './socket';
 import { useGetMessagesQuery } from './slices/messagesSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const { refetch } = useGetMessagesQuery();
