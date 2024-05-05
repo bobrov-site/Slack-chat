@@ -4,6 +4,9 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import Dropdown from 'react-bootstrap/Dropdown';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
@@ -94,7 +97,27 @@ const Channels = () => {
       <Nav className="flex-column nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {channels.map((channel) => (
           <Nav.Item key={channel.id}>
-            <Button onClick={() => switchChannel(channel)} type="button" className="w-100 text-start rounded-0" variant={getVariantButton(channel)}>{`#${channel.name}`}</Button>
+            {channel.removable ? (
+              <Dropdown as={ButtonGroup} drop="down" className="w-100">
+                <Button onClick={() => switchChannel(channel)} className="text-start" variant="light">{channel.name}</Button>
+
+                <Dropdown.Toggle className="text-end" split variant="light" id={`dropdown-split-button${channel.id}`} />
+
+                <Dropdown.Menu>
+                  <Dropdown.Item>Удалить</Dropdown.Item>
+                  <Dropdown.Item>Переименовать</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : (
+              <Button
+                as={ButtonGroup}
+                variant={getVariantButton(channel)}
+                className="w-100 text-start rounded-0"
+                onClick={() => switchChannel(channel)}
+              >
+                {channel.name}
+              </Button>
+            )}
           </Nav.Item>
         ))}
       </Nav>
