@@ -20,11 +20,11 @@ const NewChannel = () => {
       .required('Required'),
   });
   const handleShowModal = () => {
-    dispatch(setShowModal(true));
+    dispatch(setShowModal('new-channel'));
   };
 
   const handleCloseModal = () => {
-    dispatch(setShowModal(false));
+    dispatch(setShowModal(''));
   };
   const handleFormSubmit = async (values) => {
     const { channelName } = values;
@@ -44,7 +44,7 @@ const NewChannel = () => {
       <Button size="sm" variant="outline-primary" onClick={() => handleShowModal()}>
         <Plus />
       </Button>
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModal === 'new-channel'} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Добавить канал</Modal.Title>
         </Modal.Header>
