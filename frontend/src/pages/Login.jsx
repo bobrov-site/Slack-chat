@@ -45,9 +45,9 @@ const Login = () => {
           <Col xs="12" md="8" xxl="6">
             <Card className="shadow-sm">
               <Card.Body className="row">
-                <Col xs="12" md="6">
+                <Col xs="12" md="6" className="d-flex align-items-center justify-content-center">
                   {/* TODO допилить изображение */}
-                  <Image src="#" alt="главное изображение" />
+                  <Image src="login.jpeg" alt="главное изображение" />
                 </Col>
                 <Col xs="12" md="6">
                   <Formik
