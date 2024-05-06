@@ -40,7 +40,7 @@ const Login = () => {
   };
   return (
     (
-      <Container>
+      <Container className="mb-auto mt-auto">
         <Row className="justify-content-center">
           <Col xs="12" md="8" xxl="6">
             <Card className="shadow-sm">
