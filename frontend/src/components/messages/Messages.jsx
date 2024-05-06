@@ -32,8 +32,7 @@ const Messages = () => {
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="mb-0">
             <b>
-              #
-              {currentChannelName}
+              {`# ${currentChannelName}`}
             </b>
           </p>
           <span className="text-muted">

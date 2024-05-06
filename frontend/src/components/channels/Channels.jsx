@@ -67,6 +67,7 @@ const Channels = () => {
     await updateChannel(data);
     refetchChannels();
     handleCloseModal();
+    dispatch(changeChannel({ id: channelId, name: channelName }));
     toast.success('Канал переименован');
   };
   return (
@@ -80,7 +81,7 @@ const Channels = () => {
           <Nav.Item key={channel.id}>
             {channel.removable ? (
               <Dropdown as={ButtonGroup} drop="down" className="w-100">
-                <Button onClick={() => switchChannel(channel)} className="text-start" variant={getVariantButton(channel)}>{channel.name}</Button>
+                <Button onClick={() => switchChannel(channel)} className="text-start" variant={getVariantButton(channel)}>{`# ${channel.name}`}</Button>
 
                 <Dropdown.Toggle className="text-end" split variant={getVariantButton(channel)} id={`dropdown-split-button${channel.id}`} />
 
@@ -96,7 +97,7 @@ const Channels = () => {
                 className="w-100 text-start rounded-0"
                 onClick={() => switchChannel(channel)}
               >
-                {channel.name}
+                {`# ${channel.name}`}
               </Button>
             )}
             <Modal show={showModal === 'rename-channel'} onHide={handleCloseModal}>
