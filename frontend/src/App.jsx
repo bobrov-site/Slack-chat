@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
-import { socket } from './socket';
+import socket from './socket';
 import { useGetMessagesQuery } from './slices/messagesSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
