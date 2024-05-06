@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   currentChannelId: '1',
   currentChannelName: 'general',
-  showModal: false,
+  showModal: '',
 };
 
 const appSlice = createSlice({
