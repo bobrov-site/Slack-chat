@@ -54,7 +54,9 @@ const Login = () => {
                     initialValues={{ nickname: '', password: '' }}
                     onSubmit={handleFormSubmit}
                   >
-                    {({ handleSubmit, handleChange, values, errors }) => (
+                    {({
+                      handleSubmit, handleChange, values, errors,
+                    }) => (
                       <Form onSubmit={handleSubmit} className="form">
                         <h1>Войти</h1>
                         <Form.Group className="mb-3">
