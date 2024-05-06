@@ -33,9 +33,9 @@ const Channels = () => {
           <Nav.Item key={channel.id}>
             {channel.removable ? (
               <Dropdown as={ButtonGroup} drop="down" className="w-100">
-                <Button onClick={() => switchChannel(channel)} className="text-start" variant="light">{channel.name}</Button>
+                <Button onClick={() => switchChannel(channel)} className="text-start" variant={getVariantButton(channel)}>{channel.name}</Button>
 
-                <Dropdown.Toggle className="text-end" split variant="light" id={`dropdown-split-button${channel.id}`} />
+                <Dropdown.Toggle className="text-end" split variant={getVariantButton(channel)} id={`dropdown-split-button${channel.id}`} />
 
                 <Dropdown.Menu>
                   <Dropdown.Item>Удалить</Dropdown.Item>
