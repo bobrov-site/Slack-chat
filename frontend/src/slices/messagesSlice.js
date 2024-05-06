@@ -17,10 +17,17 @@ export const messagesApi = createApi({
         body: message,
       }),
     }),
+    removeMessage: builder.mutation({
+      query: (id) => ({
+        method: 'DELETE',
+        url: id,
+      }),
+    }),
   }),
 });
 
 export const {
   useGetMessagesQuery,
   useAddMessageMutation,
+  useRemoveMessageMutation,
 } = messagesApi;
