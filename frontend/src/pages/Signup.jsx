@@ -1,6 +1,5 @@
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Container from 'react-bootstrap/Container';
@@ -46,6 +45,7 @@ const Signup = () => {
       dispatch(setUserData({ nickname, token: response.data.token }));
       return navigate('/');
     }
+    return null;
   };
   return (
     <Container className="mb-auto mt-auto">
