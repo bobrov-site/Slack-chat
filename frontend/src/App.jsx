@@ -9,6 +9,7 @@ import { useGetMessagesQuery } from './slices/messagesSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Signup from './pages/Signup';
+import Header from './components/Header';
 
 const App = () => {
   const { refetch } = useGetMessagesQuery();
@@ -25,6 +26,7 @@ const App = () => {
   }, [refetch]);
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
