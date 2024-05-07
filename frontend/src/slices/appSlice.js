@@ -2,6 +2,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  token: localStorage.getItem('token') ?? null,
+  username: '',
   currentChannelId: '1',
   currentChannelName: 'general',
   showModal: '',
@@ -19,8 +21,12 @@ const appSlice = createSlice({
     setShowModal: (state, action) => {
       state.showModal = action.payload;
     },
+    setUserData: (state, action) => {
+      state.token = action.payload.token;
+      state.username = action.payload.nickname;
+    },
   },
 });
 
-export const { changeChannel, setShowModal } = appSlice.actions;
+export const { changeChannel, setShowModal, setUserData } = appSlice.actions;
 export default appSlice.reducer;
