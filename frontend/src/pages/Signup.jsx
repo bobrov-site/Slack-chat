@@ -10,26 +10,41 @@ import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useSignupMutation } from '../slices/authSlice';
+import { setUserData } from '../slices/appSlice';
 
 const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [signup] = useSignupMutation();
   const SignupSchema = Yup.object().shape({
     nickname: Yup.string().required('Обязательное поле').min(3, 'Too Short!').max(20, 'Too Long!'),
     password: Yup.string().required('Обязательное поле').min(6, 'Too  Short!'),
     passwordConfirm: Yup.string().required('Обязательное поле').oneOf([Yup.ref('password'), null], 'Пароли должны совпадать'),
   });
-  const handleFormSubmit = async (values) => {
-    const {nickname, password} = values;
+  const handleFormSubmit = async (values, { setErrors }) => {
+    const { nickname, password } = values;
     const user = {
       username: nickname,
       password,
     };
-    try {
-
+    const response = await signup(user);
+    if (response.error) {
+      const { status } = response.error;
+      switch (status) {
+        case 409: {
+          setErrors({ nickname: 'Такой пользователь уже существует' });
+          break;
+        }
+        default: {
+          setErrors({ nickname: 'Неверные имя пользователя или пароль', password: 'Неверные имя пользователя или пароль', passwordConfirm: 'Неверные имя пользователя или пароль' });
+        }
+      }
     }
-    catch(e) {
-      
+    if (response.data) {
+      localStorage.setItem('token', response.data.token);
+      dispatch(setUserData({ nickname, token: response.data.token }));
+      return navigate('/');
     }
   };
   return (
