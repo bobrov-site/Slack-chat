@@ -9,7 +9,7 @@ import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { setUserData } from '../slices/authSlice';
+import { setUserData } from '../slices/appSlice';
 import routes from '../routes';
 
 const axiosConfig = {

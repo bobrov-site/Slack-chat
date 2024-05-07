@@ -8,7 +8,7 @@ import Channels from '../components/channels/Channels';
 import Messages from '../components/messages/Messages';
 
 const Home = () => {
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.app);
   const navigate = useNavigate();
   useEffect(() => {
     if (!token) {

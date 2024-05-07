@@ -10,7 +10,7 @@ import { useGetMessagesQuery, useAddMessageMutation } from '../../slices/message
 
 const Messages = () => {
   const { data: messages = [], refetch } = useGetMessagesQuery();
-  const username = useSelector((state) => state.auth.username);
+  const username = useSelector((state) => state.app.username);
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
   const currentChannelName = useSelector((state) => state.app.currentChannelName);
   const filtredMessages = messages.filter((message) => message.channelId === currentChannelId);
