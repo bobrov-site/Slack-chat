@@ -1,21 +1,32 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import useSetHeaders from '../hooks';
+import routes from '../routes';
 
-const initialState = {
-  token: localStorage.getItem('token') ?? null,
-  username: '',
-};
-
-const authSlice = createSlice({
-  name: 'auth',
-  initialState,
-  reducers: {
-    setUserData: (state, action) => {
-      state.token = action.payload.token;
-      state.username = action.payload.nickname;
-    },
-  },
+export const authApi = createApi({
+  reducerPath: 'auth',
+  baseQuery: fetchBaseQuery(
+    { baseUrl: routes.apiPath, prepareHeaders: useSetHeaders, tagTypes: ['Auth'] },
+  ),
+  endpoints: (builder) => ({
+    login: builder.mutation({
+      query: (user) => ({
+        method: 'POST',
+        url: '/login',
+        body: user,
+      }),
+    }),
+    signup: builder.mutation({
+      query: ({ username, password }) => ({
+        method: 'POST',
+        url: '/signup',
+        body: { username, password },
+      }),
+    }),
+  }),
 });
 
-export const { setUserData } = authSlice.actions;
-export default authSlice.reducer;
+export const {
+  useLoginMutation,
+  useSignupMutation,
+} = authApi;

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
@@ -10,28 +9,22 @@ import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { setUserData } from '../slices/appSlice';
-import routes from '../routes';
-
-const axiosConfig = {
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
-};
+import { useLoginMutation } from '../slices/authSlice';
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [login] = useLoginMutation();
   const handleFormSubmit = async (values, { setErrors }) => {
     const { nickname, password } = values;
-    const data = {
+    const user = {
       username: nickname,
       password,
     };
     try {
-      const response = await axios.post(routes.login(), data, axiosConfig);
-      localStorage.setItem('token', response.data.token);
+      const response = await login(user);
       dispatch(setUserData({ nickname, token: response.data.token }));
+      localStorage.setItem('token', response.data.token);
       return navigate('/');
     } catch (e) {
       setErrors({ nickname: 'Неверные имя пользователя или пароль', password: 'Неверные имя пользователя или пароль' });
