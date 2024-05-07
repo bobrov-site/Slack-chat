@@ -8,6 +8,7 @@ import socket from './socket';
 import { useGetMessagesQuery } from './slices/messagesSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+import Signup from './pages/Signup';
 
 const App = () => {
   const { refetch } = useGetMessagesQuery();
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </BrowserRouter>
   );
