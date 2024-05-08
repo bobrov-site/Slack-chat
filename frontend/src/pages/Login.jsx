@@ -8,10 +8,12 @@ import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useTranslation } from 'react-i18next';
 import { setUserData } from '../slices/appSlice';
 import { useLoginMutation } from '../slices/authSlice';
 
 const Login = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
@@ -27,7 +29,7 @@ const Login = () => {
       localStorage.setItem('token', response.data.token);
       return navigate('/');
     } catch (e) {
-      setErrors({ nickname: 'Неверные имя пользователя или пароль', password: 'Неверные имя пользователя или пароль' });
+      setErrors({ password: t('form.errors.password') });
       return null;
     }
   };
@@ -39,7 +41,7 @@ const Login = () => {
             <Card className="shadow-sm">
               <Card.Body className="row">
                 <Col xs="12" md="6" className="d-flex align-items-center justify-content-center">
-                  <Image src="login.jpeg" alt="главное изображение" />
+                  <Image src="login.jpeg" alt={t('loginPage.title')} />
                 </Col>
                 <Col xs="12" md="6">
                   <Formik
@@ -50,17 +52,17 @@ const Login = () => {
                       handleSubmit, handleChange, values, errors,
                     }) => (
                       <Form onSubmit={handleSubmit} className="form">
-                        <h1>Войти</h1>
+                        <h1>{t('loginPage.title')}</h1>
                         <Form.Group className="mb-3">
-                          <Form.Label>Никнейм</Form.Label>
-                          <Form.Control value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.nickname} />
+                          <Form.Label>{t('loginPage.nickname')}</Form.Label>
+                          <Form.Control value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.password} />
                         </Form.Group>
                         <Form.Group className="mb-3 position-relative">
-                          <Form.Label>Пароль</Form.Label>
+                          <Form.Label>{t('loginPage.password')}</Form.Label>
                           <Form.Control value={values.password} onChange={handleChange} type="password" name="password" isInvalid={!!errors.password} />
-                          <Form.Control.Feedback type="invalid" tooltip>{errors.nickname}</Form.Control.Feedback>
+                          <Form.Control.Feedback type="invalid" tooltip>{errors.password}</Form.Control.Feedback>
                         </Form.Group>
-                        <Button type="submit" className="w-100" variant="outline-primary">Войти</Button>
+                        <Button type="submit" className="w-100" variant="outline-primary">{t('loginPage.button')}</Button>
                       </Form>
                     )}
                   </Formik>
@@ -68,8 +70,11 @@ const Login = () => {
               </Card.Body>
               <Card.Footer className="p-4">
                 <div className="text-center">
-                  <span>Нет аккаунта?</span>
-                  <Link to="/signup">Регистрация</Link>
+                  <span>
+                    {t('loginPage.footer.text')}
+                    {' '}
+                    <Link to="/signup">{t('loginPage.footer.link')}</Link>
+                  </span>
                 </div>
               </Card.Footer>
             </Card>

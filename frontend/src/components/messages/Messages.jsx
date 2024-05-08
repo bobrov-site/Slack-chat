@@ -6,9 +6,11 @@ import { useSelector } from 'react-redux';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Formik } from 'formik';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useGetMessagesQuery, useAddMessageMutation } from '../../slices/messagesSlice';
 
 const Messages = () => {
+  const { t } = useTranslation();
   const { data: messages = [], refetch } = useGetMessagesQuery();
   const username = useSelector((state) => state.app.username);
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
@@ -38,7 +40,7 @@ const Messages = () => {
           <span className="text-muted">
             {filtredMessages.length}
             {' '}
-            сообщения
+            {t('messages.messages')}
           </span>
         </div>
         <div className="overflow-auto px-5">

@@ -6,18 +6,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import { useGetChannelsQuery, useAddChannelMutation } from '../../slices/channelsSlice';
 import { changeChannel, setShowModal } from '../../slices/appSlice';
 
 const NewChannel = () => {
+  const { t } = useTranslation();
   const { data: channels = [], refetch: refetchChannels } = useGetChannelsQuery();
   const dispatch = useDispatch();
   const showModal = useSelector((state) => state.app.showModal);
   const channelsNames = channels.map((channel) => channel.name);
   const [addChannel] = useAddChannelMutation();
   const ChannelNameSchema = Yup.object().shape({
-    channelName: Yup.string().notOneOf(channelsNames, 'Такой канал уже существует').min(3, 'Too Short!').max(20, 'Too Long!')
-      .required('Required'),
+    channelName: Yup.string().notOneOf(channelsNames, t('form.errors.channelExists')).min(3, t('form.errors.min')).max(20, t('form.errors.max'))
+      .required(t('form.errors.required')),
   });
   const handleShowModal = () => {
     dispatch(setShowModal('new-channel'));
@@ -36,7 +38,7 @@ const NewChannel = () => {
     dispatch(changeChannel({ id, name }));
     refetchChannels();
     handleCloseModal();
-    toast.success('Канал добавлен');
+    toast.success(t('toast.addChannel'));
   };
   return (
     <div>
@@ -46,7 +48,7 @@ const NewChannel = () => {
       </Button>
       <Modal show={showModal === 'new-channel'} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Добавить канал</Modal.Title>
+          <Modal.Title>{t('modals.titleAddChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
@@ -58,12 +60,12 @@ const NewChannel = () => {
               values, handleChange, handleSubmit, errors,
             }) => (
               <Form onSubmit={handleSubmit}>
-                <Form.Label htmlFor="channelName">Имя канала</Form.Label>
+                <Form.Label htmlFor="channelName">{t('form.labels.channelName')}</Form.Label>
                 <Form.Control value={values.channelName} name="channelName" onChange={handleChange} id="channelName" isInvalid={!!errors.channelName} autoFocus />
                 <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
                 <div className="d-flex justify-content-end mt-2">
-                  <Button type="button" variant="secondary" onClick={handleCloseModal} className="me-2">Отменить</Button>
-                  <Button type="submit" variant="primary">Отправить</Button>
+                  <Button type="button" variant="secondary" onClick={handleCloseModal} className="me-2">{t('form.buttons.cancel')}</Button>
+                  <Button type="submit" variant="primary">{t('form.buttons.submit')}</Button>
                 </div>
               </Form>
             )}

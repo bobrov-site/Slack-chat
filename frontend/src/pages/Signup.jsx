@@ -9,17 +9,19 @@ import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useTranslation } from 'react-i18next';
 import { useSignupMutation } from '../slices/authSlice';
 import { setUserData } from '../slices/appSlice';
 
 const Signup = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [signup] = useSignupMutation();
   const SignupSchema = Yup.object().shape({
-    nickname: Yup.string().required('Обязательное поле').min(3, 'Too Short!').max(20, 'Too Long!'),
-    password: Yup.string().required('Обязательное поле').min(6, 'Too  Short!'),
-    passwordConfirm: Yup.string().required('Обязательное поле').oneOf([Yup.ref('password'), null], 'Пароли должны совпадать'),
+    nickname: Yup.string().required(t('form.errors.required')).min(3, t('form.errors.min')).max(20, t('form.errors.max')),
+    password: Yup.string().required(t('form.errors.required')).min(6, t('form.errors.min')),
+    passwordConfirm: Yup.string().required(t('form.errors.required')).oneOf([Yup.ref('password'), null], t('form.errors.passwordMustMatch')),
   });
   const handleFormSubmit = async (values, { setErrors }) => {
     const { nickname, password } = values;
@@ -32,11 +34,11 @@ const Signup = () => {
       const { status } = response.error;
       switch (status) {
         case 409: {
-          setErrors({ nickname: 'Такой пользователь уже существует' });
+          setErrors({ nickname: t('form.errors.userExists') });
           break;
         }
         default: {
-          setErrors({ nickname: 'Неверные имя пользователя или пароль', password: 'Неверные имя пользователя или пароль', passwordConfirm: 'Неверные имя пользователя или пароль' });
+          setErrors({ nickname: t('form.errors.nickname'), password: t('form.errors.password'), passwordConfirm: t('form.errors.passwordConfirm') });
         }
       }
     }
@@ -54,7 +56,7 @@ const Signup = () => {
           <Card className="shadow-sm">
             <Card.Body className="row">
               <Col xs="12" md="6" className="d-flex align-items-center justify-content-center">
-                <Image src="signup.jpg" alt="регистрация" />
+                <Image src="signup.jpg" alt={t('signupPage.imgAlt')} />
               </Col>
               <Col xs="12" md="6">
                 <Formik
@@ -67,9 +69,9 @@ const Signup = () => {
                     handleSubmit, handleChange, values, errors,
                   }) => (
                     <Form onSubmit={handleSubmit} className="form">
-                      <h1>Регистрация</h1>
+                      <h1>{t('signupPage.title')}</h1>
                       <Form.Group className="mb-3">
-                        <Form.Label htmlFor="nickname">Имя пользователя</Form.Label>
+                        <Form.Label htmlFor="nickname">{t('signupPage.nickname')}</Form.Label>
                         <Form.Control id="nickname" value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.nickname} />
                         <Form.Control.Feedback type="invalid">{errors.nickname}</Form.Control.Feedback>
                       </Form.Group>
