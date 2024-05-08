@@ -19,13 +19,15 @@ const Messages = () => {
   const filtredMessages = messages.filter((message) => message.channelId === currentChannelId);
   const [addMessage] = useAddMessageMutation();
   filter.loadDictionary('ru');
-  const handleFormSubmit = (values) => {
+  const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
     const data = {};
     const { message } = values;
     data.message = filter.clean(message);
     data.channelId = currentChannelId;
     data.username = username;
-    addMessage(data);
+    await addMessage(data);
+    resetForm();
+    setSubmitting(false);
   };
   useEffect(() => {
     refetch();
