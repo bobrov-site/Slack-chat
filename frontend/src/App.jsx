@@ -20,10 +20,6 @@ const App = () => {
     captureUnhandledRejections: true,
     environment: 'production',
   };
-  const TestError = () => {
-    const a = null;
-    return a.hello();
-  }
   const { refetch } = useGetMessagesQuery();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -40,7 +36,6 @@ const App = () => {
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
         <BrowserRouter>
-          <TestError />
           <Header />
           <Routes>
             <Route path="*" element={<NotFound />} />
