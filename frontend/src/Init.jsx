@@ -1,13 +1,28 @@
 import { Provider } from 'react-redux';
+import i18next from 'i18next';
+import { I18nextProvider } from 'react-i18next';
 import store from './slices';
 import App from './App';
+import resources from './locales';
 
-const Init = () => (
-  <Provider store={store}>
-    <div className="h-100 d-flex flex-column justify-content-between">
-      <App />
-    </div>
-  </Provider>
-);
+const Init = () => {
+  i18next.init({
+    lng: 'ru',
+    resources,
+    debug: false,
+    interpolation: {
+      escapeValue: false,
+    },
+  });
+  return (
+    <Provider store={store}>
+      <I18nextProvider i18n={i18next}>
+        <div className="h-100 d-flex flex-column justify-content-between">
+          <App />
+        </div>
+      </I18nextProvider>
+    </Provider>
+  );
+};
 
 export default Init;
