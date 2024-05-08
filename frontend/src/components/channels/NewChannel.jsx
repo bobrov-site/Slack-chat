@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import * as filter from 'leo-profanity';
 import { useGetChannelsQuery, useAddChannelMutation } from '../../slices/channelsSlice';
 import { changeChannel, setShowModal } from '../../slices/appSlice';
 
@@ -21,6 +22,7 @@ const NewChannel = () => {
     channelName: Yup.string().notOneOf(channelsNames, t('form.errors.channelExists')).min(3, t('form.errors.min')).max(20, t('form.errors.max'))
       .required(t('form.errors.required')),
   });
+  filter.loadDictionary('ru');
   const handleShowModal = () => {
     dispatch(setShowModal('new-channel'));
   };
@@ -31,7 +33,7 @@ const NewChannel = () => {
   const handleFormSubmit = async (values) => {
     const { channelName } = values;
     const data = {};
-    data.name = channelName;
+    data.name = filter.clean(channelName);
     data.removable = true;
     const response = await addChannel(data);
     const { id, name } = response.data;
