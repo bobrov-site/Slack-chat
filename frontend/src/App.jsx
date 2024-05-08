@@ -16,8 +16,6 @@ import Header from './components/Header';
 const App = () => {
   const rollbarConfig = {
     accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
-    captureUncaught: true,
-    captureUnhandledRejections: true,
     environment: 'production',
   };
   function TestError() {
