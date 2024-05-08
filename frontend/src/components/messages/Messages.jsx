@@ -7,6 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { Formik } from 'formik';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import * as filter from 'leo-profanity';
 import { useGetMessagesQuery, useAddMessageMutation } from '../../slices/messagesSlice';
 
 const Messages = () => {
@@ -17,10 +18,11 @@ const Messages = () => {
   const currentChannelName = useSelector((state) => state.app.currentChannelName);
   const filtredMessages = messages.filter((message) => message.channelId === currentChannelId);
   const [addMessage] = useAddMessageMutation();
+  filter.loadDictionary('ru');
   const handleFormSubmit = (values) => {
     const data = {};
     const { message } = values;
-    data.message = message;
+    data.message = filter.clean(message);
     data.channelId = currentChannelId;
     data.username = username;
     addMessage(data);
