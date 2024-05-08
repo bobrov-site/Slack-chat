@@ -9,6 +9,7 @@ import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { setUserData } from '../slices/appSlice';
 import { useLoginMutation } from '../slices/authSlice';
 
@@ -29,6 +30,10 @@ const Login = () => {
       localStorage.setItem('token', response.data.token);
       return navigate('/');
     } catch (e) {
+      if (!e.response) {
+        toast.error(t('toast.errorNetwork'));
+        return null;
+      }
       setErrors({ password: t('form.errors.password') });
       return null;
     }

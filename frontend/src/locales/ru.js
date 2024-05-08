@@ -66,6 +66,7 @@ export default {
     toast: {
       addChannel: 'Канал добавлен',
       renameChannel: 'Канал переименован',
+      errorNetwork: 'Ошибка соединения',
     },
   },
 };
