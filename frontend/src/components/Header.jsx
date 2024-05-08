@@ -4,10 +4,12 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { setUserData } from '../slices/appSlice';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const app = useSelector((state) => state.app);
   const logOut = () => {
     localStorage.removeItem('token');
@@ -24,7 +26,7 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             {app.token ? (
-              <Button onClick={() => logOut()} variant="primary">Выйти</Button>
+              <Button onClick={() => logOut()} variant="primary">{t('header.logout')}</Button>
             ) : (
               ''
             )}
