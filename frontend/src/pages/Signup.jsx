@@ -72,17 +72,17 @@ const Signup = () => {
                       <h1>{t('signupPage.title')}</h1>
                       <Form.Group className="mb-3">
                         <Form.Label htmlFor="nickname">{t('signupPage.nickname')}</Form.Label>
-                        <Form.Control id="nickname" value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.nickname} />
+                        <Form.Control required id="nickname" value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.nickname} />
                         <Form.Control.Feedback type="invalid">{errors.nickname}</Form.Control.Feedback>
                       </Form.Group>
                       <Form.Group className="mb-3">
                         <Form.Label htmlFor="password">Пароль</Form.Label>
-                        <Form.Control id="password" value={values.password} onChange={handleChange} type="password" name="password" isInvalid={!!errors.password} />
+                        <Form.Control required id="password" value={values.password} onChange={handleChange} type="password" name="password" isInvalid={!!errors.password} />
                         <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
                       </Form.Group>
                       <Form.Group className="mb-3">
                         <Form.Label htmlFor="paswordConfirm">Подтвердите пароль</Form.Label>
-                        <Form.Control id="paswordConfirm" value={values.passwordConfirm} onChange={handleChange} type="password" name="passwordConfirm" isInvalid={!!errors.passwordConfirm} />
+                        <Form.Control required id="paswordConfirm" value={values.passwordConfirm} onChange={handleChange} type="password" name="passwordConfirm" isInvalid={!!errors.passwordConfirm} />
                         <Form.Control.Feedback type="invalid">{errors.passwordConfirm}</Form.Control.Feedback>
                       </Form.Group>
                       <Button type="submit" className="w-100" variant="outline-primary">Зарегистрироваться</Button>
