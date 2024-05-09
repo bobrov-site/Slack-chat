@@ -51,7 +51,7 @@ const Login = () => {
     (
       <Container className="mb-auto mt-auto">
         <Row className="justify-content-center">
-          <Col xs="12" md="8" xxl="6">
+          <Col xs="12" md="8" xxl="8">
             <Card className="shadow-sm">
               <Card.Body className="row">
                 <Col xs="12" md="6" className="d-flex align-items-center justify-content-center">
