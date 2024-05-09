@@ -27,7 +27,7 @@ const Channels = () => {
   const channelsNames = channels.map((channel) => channel.name);
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
   const ChannelNameSchema = Yup.object().shape({
-    channelName: Yup.string().notOneOf(channelsNames, t('form.errors.channelExists')).min(3, t('form.errors.min')).max(20, t('form.errors.max'))
+    channelName: Yup.string().notOneOf(channelsNames, t('form.errors.channelExists')).min(3, t('form.errors.range')).max(20, t('form.errors.range'))
       .required(t('form.errors.required')),
   });
   const getVariantButton = (channel) => (channel.id === currentChannelId ? 'secondary' : 'light');
