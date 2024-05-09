@@ -24,19 +24,28 @@ const Login = () => {
       username: nickname,
       password,
     };
-    try {
-      const response = await login(user);
-      dispatch(setUserData({ nickname, token: response.data.token }));
-      localStorage.setItem('token', response.data.token);
+    const { data, error } = await login(user);
+    if (data) {
+      dispatch(setUserData({ nickname, token: data.token }));
+      localStorage.setItem('token', data.token);
       return navigate('/');
-    } catch (e) {
-      if (!e.response) {
-        toast.error(t('toast.errorNetwork'));
-        return null;
-      }
-      setErrors({ password: t('form.errors.password') });
-      return null;
     }
+    if (error) {
+      switch (error.status) {
+        case 401: {
+          setErrors({ password: t('form.errors.password') });
+          break;
+        }
+        case 'FETCH_ERROR': {
+          toast.error(t('toast.errorNetwork'));
+          break;
+        }
+        default: {
+          setErrors({ password: t('form.errors.password') });
+        }
+      }
+    }
+    return null;
   };
   return (
     (
