@@ -20,7 +20,7 @@ const Header = () => {
     <Navbar expand="lg" className="bg-body-tertiary mb-2">
       <Container>
         <Navbar.Brand>
-          <Link className="text-decoration-none text-black" to="/">Slack Chat</Link>
+          <Link className="text-decoration-none text-black" to="/">Hexlet Chat</Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
