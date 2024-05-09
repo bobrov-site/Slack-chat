@@ -15,7 +15,7 @@ import Header from './components/Header';
 
 const App = () => {
   const rollbarConfig = {
-    accessToken: process.env.TOKEN_ACCESS,
+    accessToken: process.env.REACT_APP_TOKEN_ACCESS,
     environment: 'production',
   };
   function TestError() {
@@ -38,6 +38,7 @@ const App = () => {
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
         <BrowserRouter>
+        <TestError />
           <Header />
           <Routes>
             <Route path="*" element={<NotFound />} />
