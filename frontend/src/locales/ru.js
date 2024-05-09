@@ -6,7 +6,7 @@ export default {
     loginPage: {
       title: 'Вход',
       imgAlt: 'главное изображение',
-      nickname: 'Никнейм',
+      nickname: 'Ваш ник',
       password: 'Пароль',
       button: 'Войти',
       footer: {
