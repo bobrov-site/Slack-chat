@@ -18,10 +18,6 @@ const App = () => {
     accessToken: process.env.REACT_APP_TOKEN_ACCESS,
     environment: 'production',
   };
-  function TestError() {
-    const a = null;
-    return a.hello();
-  }
   const { refetch } = useGetMessagesQuery();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -38,7 +34,6 @@ const App = () => {
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
         <BrowserRouter>
-        <TestError />
           <Header />
           <Routes>
             <Route path="*" element={<NotFound />} />
