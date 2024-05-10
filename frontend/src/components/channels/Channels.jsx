@@ -88,7 +88,7 @@ const Channels = () => {
           <Nav.Item key={channel.id}>
             {channel.removable ? (
               <Dropdown as={ButtonGroup} drop="down" className="w-100">
-                <Button onClick={() => switchChannel(channel)} className="text-start" variant={getVariantButton(channel)}>{`# ${channel.name}`}</Button>
+                <Button onClick={() => switchChannel(channel)} className="w-100 rounded-0 text-start text-truncate" variant={getVariantButton(channel)}>{`# ${channel.name}`}</Button>
 
                 <Dropdown.Toggle as={Button} className="text-end" split variant={getVariantButton(channel)} id={`dropdown-split-button${channel.id}`}>
                   <span className="visually-hidden">{t('dropdown.toggle')}</span>
@@ -102,7 +102,7 @@ const Channels = () => {
               <Button
                 as={ButtonGroup}
                 variant={getVariantButton(channel)}
-                className="w-100 text-start rounded-0"
+                className="w-100 text-start rounded-0 text-truncate"
                 onClick={() => switchChannel(channel)}
               >
                 {`# ${channel.name}`}
