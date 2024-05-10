@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useEffect, } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { Provider, ErrorBoundary } from '@rollbar/react'; // Provider imports 'rollbar'
