@@ -45,7 +45,7 @@ const NewChannel = () => {
     <div>
 
       <Button size="sm" variant="outline-primary" onClick={() => handleShowModal()}>
-        <Plus />
+        +
       </Button>
       <Modal show={showModal === 'new-channel'} onHide={handleCloseModal}>
         <Modal.Header closeButton>
