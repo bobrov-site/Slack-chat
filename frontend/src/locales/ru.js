@@ -44,7 +44,7 @@ export default {
     },
     form: {
       labels: {
-        channelName: 'Название канала',
+        channelName: 'Имя канала',
         newMessage: 'Новое сообщение',
       },
       placeholders: {
