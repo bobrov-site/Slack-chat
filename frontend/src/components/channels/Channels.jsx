@@ -124,7 +124,7 @@ const Channels = () => {
               values, handleChange, handleSubmit, errors,
             }) => (
               <Form onSubmit={handleSubmit}>
-                <Form.Label visuallyHidden>{t('form.labels.channelName')}</Form.Label>
+                <Form.Label htmlFor="channelName" visuallyHidden>{t('form.labels.channelName')}</Form.Label>
                 <Form.Control onChange={handleChange} value={values.channelName} id="channelName" isInvalid={!!errors.channelName} autoFocus />
                 <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
                 <div className="d-flex justify-content-end mt-2">
