@@ -18,7 +18,6 @@ const Messages = () => {
   const currentChannelName = useSelector((state) => state.app.currentChannelName);
   const filtredMessages = messages.filter((message) => message.channelId === currentChannelId);
   const [addMessage] = useAddMessageMutation();
-  filter.loadDictionary('ru');
   const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
     const data = {};
     const { message } = values;

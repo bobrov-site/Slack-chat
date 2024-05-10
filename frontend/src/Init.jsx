@@ -1,6 +1,7 @@
 import { Provider } from 'react-redux';
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
+import filter from 'leo-profanity';
 import store from './slices';
 import App from './App';
 import resources from './locales';
@@ -14,6 +15,8 @@ const Init = () => {
       escapeValue: false,
     },
   });
+  filter.loadDictionary('ru');
+  filter.loadDictionary('en');
   return (
     <Provider store={store}>
       <I18nextProvider i18n={i18next}>

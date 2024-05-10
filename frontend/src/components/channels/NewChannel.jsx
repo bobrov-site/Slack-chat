@@ -22,7 +22,6 @@ const NewChannel = () => {
     channelName: Yup.string().notOneOf(channelsNames, t('form.errors.channelExists')).min(3, t('form.errors.range')).max(20, t('form.errors.range'))
       .required(t('form.errors.required')),
   });
-  filter.loadDictionary('ru');
   const handleShowModal = () => {
     dispatch(setShowModal('new-channel'));
   };
