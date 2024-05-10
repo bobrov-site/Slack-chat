@@ -68,12 +68,12 @@ const Login = () => {
                       <Form onSubmit={handleSubmit} className="form">
                         <h1>{t('loginPage.title')}</h1>
                         <Form.Group className="mb-3">
-                          <Form.Label>{t('loginPage.nickname')}</Form.Label>
-                          <Form.Control required value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.password} autoFocus />
+                          <Form.Label htmlFor="nickname">{t('loginPage.nickname')}</Form.Label>
+                          <Form.Control id="nickname" required value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.password} autoFocus />
                         </Form.Group>
                         <Form.Group className="mb-3 position-relative">
-                          <Form.Label>{t('loginPage.password')}</Form.Label>
-                          <Form.Control required value={values.password} onChange={handleChange} type="password" name="password" isInvalid={!!errors.password} />
+                          <Form.Label htmlFor="password">{t('loginPage.password')}</Form.Label>
+                          <Form.Control id="password" required value={values.password} onChange={handleChange} type="password" name="password" isInvalid={!!errors.password} />
                           <Form.Control.Feedback type="invalid" tooltip>{errors.password}</Form.Control.Feedback>
                         </Form.Group>
                         <Button type="submit" className="w-100" variant="outline-primary">{t('loginPage.button')}</Button>
