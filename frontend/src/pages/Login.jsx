@@ -41,7 +41,7 @@ const Login = () => {
           break;
         }
         default: {
-          setErrors({ password: t('form.errors.password'), nickname: t('form.errors.nickname') });
+          setErrors({ password: t('form.errors.password') });
         }
       }
     }
@@ -69,11 +69,11 @@ const Login = () => {
                         <h1>{t('loginPage.title')}</h1>
                         <Form.Group className="mb-3">
                           <Form.Label>{t('loginPage.nickname')}</Form.Label>
-                          <Form.Control required value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.nickname} />
+                          <Form.Control value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.password} autoFocus />
                         </Form.Group>
                         <Form.Group className="mb-3 position-relative">
                           <Form.Label>{t('loginPage.password')}</Form.Label>
-                          <Form.Control required value={values.password} onChange={handleChange} type="password" name="password" isInvalid={!!errors.password} />
+                          <Form.Control value={values.password} onChange={handleChange} type="password" name="password" isInvalid={!!errors.password} />
                           <Form.Control.Feedback type="invalid" tooltip>{errors.password}</Form.Control.Feedback>
                         </Form.Group>
                         <Button type="submit" className="w-100" variant="outline-primary">{t('loginPage.button')}</Button>
