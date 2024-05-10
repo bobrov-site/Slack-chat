@@ -61,7 +61,8 @@ const Messages = () => {
             {({ handleSubmit, handleChange, values }) => (
               <Form onSubmit={handleSubmit}>
                 <InputGroup>
-                  <Form.Control value={values.message} onChange={handleChange} type="text" name="message" />
+                  <Form.Label htmlFor="new-message" hidden>{t('form.labels.message')}</Form.Label>
+                  <Form.Control id="new-message" aria-label={t('form.labels.message')} value={values.message} onChange={handleChange} type="text" name="message" />
                   <Button type="submit">
                     <Send />
                   </Button>

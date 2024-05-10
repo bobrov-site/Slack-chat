@@ -45,6 +45,7 @@ export default {
     form: {
       labels: {
         channelName: 'Название канала',
+        newMessage: 'Новое сообщение',
       },
       buttons: {
         submit: 'Отправить',
