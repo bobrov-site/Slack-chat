@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useGetChannelsQuery, useRemoveChannelMutation, useUpdateChannelMutation } from '../../slices/channelsSlice';
-import { changeChannel, setShowModal } from '../../slices/appSlice';
+import { changeChannel, setShowModal, setChannelModal } from '../../slices/appSlice';
 import { useGetMessagesQuery, useRemoveMessageMutation } from '../../slices/messagesSlice';
 import NewChannel from './NewChannel';
 
@@ -26,6 +26,8 @@ const Channels = () => {
   const [removeMessage] = useRemoveMessageMutation();
   const channelsNames = channels.map((channel) => channel.name);
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
+  const modalChannelId = useSelector((state) => state.app.modalChannelId);
+  const modalChannelName = useSelector((state) => state.app.modalChannelName);
   const ChannelNameSchema = Yup.object().shape({
     channelName: Yup.string().notOneOf(channelsNames, t('form.errors.channelExists')).min(3, t('form.errors.range')).max(20, t('form.errors.range'))
       .required(t('form.errors.required')),
@@ -38,12 +40,14 @@ const Channels = () => {
       refetchMessages();
     }
   };
-  const handleShowModal = (modalName) => {
+  const handleShowModal = (modalName, channel) => {
     dispatch(setShowModal(modalName));
+    dispatch(setChannelModal({ id: channel.id, name: channel.name }));
   };
 
   const handleCloseModal = () => {
     dispatch(setShowModal(''));
+    dispatch(setChannelModal({ id: '', name: '' }));
   };
   const deleteChannel = async (id) => {
     const filtredMessages = messages.filter((message) => message.channelId === id);
@@ -89,8 +93,8 @@ const Channels = () => {
                   <span className="visually-hidden">{t('dropdown.toggle')}</span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => handleShowModal('delete-channel')}>{t('channels.dropdown.delete')}</Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleShowModal('rename-channel')}>{t('channels.dropdown.rename')}</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleShowModal('delete-channel', channel)}>{t('channels.dropdown.delete')}</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleShowModal('rename-channel', channel)}>{t('channels.dropdown.rename')}</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             ) : (
@@ -103,47 +107,47 @@ const Channels = () => {
                 {`# ${channel.name}`}
               </Button>
             )}
-            <Modal show={showModal === 'rename-channel'} onHide={handleCloseModal}>
-              <Modal.Header closeButton>
-                <Modal.Title>{t('modals.titleRenameChannel')}</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <Formik
-                  initialValues={{ channelName: channel.name, channelId: channel.id }}
-                  validationSchema={ChannelNameSchema}
-                  onSubmit={renameChannel}
-                >
-                  {({
-                    values, handleChange, handleSubmit, errors,
-                  }) => (
-                    <Form onSubmit={handleSubmit}>
-                      <Form.Label htmlFor="channelName">{t('form.labels.channelName')}</Form.Label>
-                      <Form.Control onChange={handleChange} value={values.channelName} name="channelName" id="channelName" isInvalid={!!errors.channelName} autoFocus />
-                      <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
-                      <div className="d-flex justify-content-end mt-2">
-                        <Button type="button" variant="secondary" onClick={handleCloseModal} className="me-2">{t('form.buttons.cancel')}</Button>
-                        <Button type="submit" variant="primary">{t('form.buttons.submit')}</Button>
-                      </div>
-                    </Form>
-                  )}
-                </Formik>
-              </Modal.Body>
-            </Modal>
-            <Modal show={showModal === 'delete-channel'} onHide={handleCloseModal}>
-              <Modal.Header closeButton>
-                <Modal.Title>{t('modals.titleDeleteChannel')}</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <p>{t('modals.textDeleteChannel')}</p>
-                <div className="d-flex justify-content-end mt-2">
-                  <Button type="button" variant="secondary" onClick={handleCloseModal} className="me-2">{t('form.buttons.cancel')}</Button>
-                  <Button type="button" variant="danger" onClick={() => deleteChannel(channel.id)}>{t('form.buttons.delete')}</Button>
-                </div>
-              </Modal.Body>
-            </Modal>
           </Nav.Item>
         ))}
       </Nav>
+      <Modal show={showModal === 'rename-channel'} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>{t('modals.titleRenameChannel')}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Formik
+            initialValues={{ channelName: modalChannelName, channelId: modalChannelId }}
+            validationSchema={ChannelNameSchema}
+            onSubmit={renameChannel}
+          >
+            {({
+              values, handleChange, handleSubmit, errors,
+            }) => (
+              <Form onSubmit={handleSubmit}>
+                <Form.Label visuallyHidden>{t('form.labels.channelName')}</Form.Label>
+                <Form.Control onChange={handleChange} value={values.channelName} id="channelName" isInvalid={!!errors.channelName} autoFocus />
+                <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
+                <div className="d-flex justify-content-end mt-2">
+                  <Button type="button" variant="secondary" onClick={handleCloseModal} className="me-2">{t('form.buttons.cancel')}</Button>
+                  <Button type="submit" variant="primary">{t('form.buttons.submit')}</Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </Modal.Body>
+      </Modal>
+      <Modal show={showModal === 'delete-channel'} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>{t('modals.titleDeleteChannel')}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{t('modals.textDeleteChannel')}</p>
+          <div className="d-flex justify-content-end mt-2">
+            <Button type="button" variant="secondary" onClick={handleCloseModal} className="me-2">{t('form.buttons.cancel')}</Button>
+            <Button type="button" variant="danger" onClick={() => deleteChannel(modalChannelId.id)}>{t('form.buttons.delete')}</Button>
+          </div>
+        </Modal.Body>
+      </Modal>
     </Col>
   );
 };
