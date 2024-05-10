@@ -62,7 +62,7 @@ const Messages = () => {
               <Form onSubmit={handleSubmit}>
                 <InputGroup>
                   <Form.Label htmlFor="new-message" hidden>{t('form.labels.message')}</Form.Label>
-                  <Form.Control id="new-message" aria-label={t('form.labels.message')} value={values.message} onChange={handleChange} type="text" name="message" />
+                  <Form.Control placeholder={t('form.placeholders.message')} autoFocus id="new-message" aria-label={t('form.labels.message')} value={values.message} onChange={handleChange} type="text" name="message" />
                   <Button type="submit">
                     <Send />
                   </Button>

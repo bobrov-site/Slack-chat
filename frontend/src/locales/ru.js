@@ -47,6 +47,9 @@ export default {
         channelName: 'Название канала',
         newMessage: 'Новое сообщение',
       },
+      placeholders: {
+        message: 'Введите сообщение...',
+      },
       buttons: {
         submit: 'Отправить',
         cancel: 'Отменить',
