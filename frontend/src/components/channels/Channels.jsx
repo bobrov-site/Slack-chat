@@ -59,10 +59,10 @@ const Channels = () => {
       refetchMessages();
     }
     await removeChannel(id);
-    toast.success(t('toast.deleteChannel'));
     refetchChannels();
     handleCloseModal();
     dispatch(changeChannel({ id: '1', name: 'general' }));
+    toast.success(t('toast.deleteChannel'));
   };
   const renameChannel = async (values) => {
     const { channelName, channelId } = values;
