@@ -1,4 +1,3 @@
-import { Plus } from 'react-bootstrap-icons';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';

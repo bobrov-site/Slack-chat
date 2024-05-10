@@ -85,8 +85,9 @@ const Channels = () => {
               <Dropdown as={ButtonGroup} drop="down" className="w-100">
                 <Button onClick={() => switchChannel(channel)} className="text-start" variant={getVariantButton(channel)}>{`# ${channel.name}`}</Button>
 
-                <Dropdown.Toggle className="text-end" split variant={getVariantButton(channel)} id={`dropdown-split-button${channel.id}`} />
-
+                <Dropdown.Toggle as={Button} className="text-end" split variant={getVariantButton(channel)} id={`dropdown-split-button${channel.id}`}>
+                  <span className="visually-hidden">{t('dropdown.toggle')}</span>
+                </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => handleShowModal('delete-channel')}>{t('channels.dropdown.delete')}</Dropdown.Item>
                   <Dropdown.Item onClick={() => handleShowModal('rename-channel')}>{t('channels.dropdown.rename')}</Dropdown.Item>

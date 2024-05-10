@@ -67,6 +67,9 @@ export default {
         passwordMustMatch: 'Пароли должны совпадать',
       },
     },
+    dropdown: {
+      toggle: 'Управление каналом',
+    },
     toast: {
       addChannel: 'Канал создан',
       renameChannel: 'Канал переименован',
