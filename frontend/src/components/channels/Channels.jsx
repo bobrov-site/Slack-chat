@@ -50,6 +50,7 @@ const Channels = () => {
     dispatch(setChannelModal({ id: '', name: '' }));
   };
   const deleteChannel = async (id) => {
+    console.log(id);
     const filtredMessages = messages.filter((message) => message.channelId === id);
     if (filtredMessages.length > 0) {
       const promises = filtredMessages.map(async (message) => {
@@ -144,7 +145,7 @@ const Channels = () => {
           <p>{t('modals.textDeleteChannel')}</p>
           <div className="d-flex justify-content-end mt-2">
             <Button type="button" variant="secondary" onClick={handleCloseModal} className="me-2">{t('form.buttons.cancel')}</Button>
-            <Button type="button" variant="danger" onClick={() => deleteChannel(modalChannelId.id)}>{t('form.buttons.delete')}</Button>
+            <Button type="button" variant="danger" onClick={() => deleteChannel(modalChannelId)}>{t('form.buttons.delete')}</Button>
           </div>
         </Modal.Body>
       </Modal>
