@@ -41,7 +41,7 @@ const Login = () => {
           break;
         }
         default: {
-          setErrors({ password: t('form.errors.password') });
+          setErrors({ password: t('form.errors.password'), nickname: t('form.errors.nickname') });
         }
       }
     }
@@ -69,7 +69,7 @@ const Login = () => {
                         <h1>{t('loginPage.title')}</h1>
                         <Form.Group className="mb-3">
                           <Form.Label>{t('loginPage.nickname')}</Form.Label>
-                          <Form.Control required value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.password} />
+                          <Form.Control required value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.nickname} />
                         </Form.Group>
                         <Form.Group className="mb-3 position-relative">
                           <Form.Label>{t('loginPage.password')}</Form.Label>
