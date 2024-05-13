@@ -1,5 +1,5 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
+import React from 'react';
 import Init from './Init';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -10,6 +10,6 @@ body.classList.add('h-100');
 document.getElementById('root').classList.add('h-100');
 root.render(
   <React.StrictMode>
-    <Init />
+    {await Init()}
   </React.StrictMode>,
 );
