@@ -8,7 +8,8 @@ import App from './App';
 import resources from './locales';
 
 const Init = async () => {
-  i18next.init({
+  const i18n = i18next.createInstance();
+  i18n.init({
     lng: 'ru',
     resources,
     debug: false,
@@ -20,7 +21,7 @@ const Init = async () => {
   filter.loadDictionary('en');
   return (
     <Provider store={store}>
-      <I18nextProvider i18n={i18next}>
+      <I18nextProvider i18n={i18n}>
         <div className="h-100 d-flex flex-column justify-content-between">
           <App />
         </div>
