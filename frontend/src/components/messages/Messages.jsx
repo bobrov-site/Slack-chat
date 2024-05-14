@@ -8,7 +8,7 @@ import { Formik } from 'formik';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as filter from 'leo-profanity';
-import { useGetMessagesQuery, useAddMessageMutation } from '../../slices/messagesSlice';
+import { useGetMessagesQuery, useAddMessageMutation, messagesApi } from '../../slices/messagesSlice';
 import socket from '../../socket';
 
 const Messages = () => {
@@ -32,8 +32,9 @@ const Messages = () => {
   };
   useEffect(() => {
     const handleNewMessage = (newMessage) => {
-      dispatch({ type: 'addMessage', payload: newMessage });
-      refetch();
+      dispatch(messagesApi.util.updateQueryData('getMessages', undefined, (draft) => {
+        draft.push(newMessage);
+      }));
     };
     socket.on('newMessage', handleNewMessage);
     return () => {
