@@ -10,10 +10,12 @@ import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 import { useGetChannelsQuery, useRemoveChannelMutation, useUpdateChannelMutation } from '../../slices/channelsSlice';
 import { changeChannel, setShowModal, setChannelModal } from '../../slices/appSlice';
 import { useGetMessagesQuery, useRemoveMessageMutation } from '../../slices/messagesSlice';
 import NewChannel from './NewChannel';
+import socket from '../../socket';
 
 const Channels = () => {
   const { t } = useTranslation();
@@ -77,6 +79,16 @@ const Channels = () => {
     dispatch(changeChannel({ id: channelId, name: channelName }));
     toast.success(t('toast.renameChannel'));
   };
+  useEffect(() => {
+    const handleNewChannel = (channel) => {
+      dispatch({ type: 'addChannel', payload: channel });
+      refetchChannels();
+    };
+    socket.on('newChannel', handleNewChannel);
+    return () => {
+      socket.off('newChannel');
+    };
+  });
   return (
     <Col xs="4" md="2" className="border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">

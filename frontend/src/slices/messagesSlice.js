@@ -7,6 +7,7 @@ export const messagesApi = createApi({
   baseQuery: fetchBaseQuery(
     { baseUrl: routes.messages(), prepareHeaders: useSetHeaders, tagTypes: ['Messages'] },
   ),
+  tagTypes: ['Messages'],
   endpoints: (builder) => ({
     getMessages: builder.query({
       query: () => '',

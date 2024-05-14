@@ -2,15 +2,17 @@ import Col from 'react-bootstrap/esm/Col';
 import Button from 'react-bootstrap/esm/Button';
 import { Send } from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Formik } from 'formik';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as filter from 'leo-profanity';
 import { useGetMessagesQuery, useAddMessageMutation } from '../../slices/messagesSlice';
+import socket from '../../socket';
 
 const Messages = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const { data: messages = [], refetch } = useGetMessagesQuery();
   const username = useSelector((state) => state.app.username);
@@ -29,8 +31,15 @@ const Messages = () => {
     setSubmitting(false);
   };
   useEffect(() => {
-    refetch();
-  }, [currentChannelId, messages, refetch]);
+    const handleNewMessage = (newMessage) => {
+      dispatch({ type: 'addMessage', payload: newMessage });
+      refetch();
+    };
+    socket.on('newMessage', handleNewMessage);
+    return () => {
+      socket.off('newMessage');
+    };
+  }, [dispatch, refetch]);
   return (
     <Col className="p-0 h-100">
       <div className="d-flex flex-column h-100">
