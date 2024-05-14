@@ -11,7 +11,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
-import { useGetChannelsQuery, useRemoveChannelMutation, useUpdateChannelMutation, channelsApi } from '../../slices/channelsSlice';
+import {
+  useGetChannelsQuery, useRemoveChannelMutation, useUpdateChannelMutation, channelsApi,
+} from '../../slices/channelsSlice';
 import { changeChannel, setShowModal, setChannelModal } from '../../slices/appSlice';
 import { useGetMessagesQuery, useRemoveMessageMutation } from '../../slices/messagesSlice';
 import NewChannel from './NewChannel';
