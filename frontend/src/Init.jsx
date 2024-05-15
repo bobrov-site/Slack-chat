@@ -7,7 +7,7 @@ import store from './slices';
 import App from './App';
 import resources from './locales';
 
-const Init = async () => {
+const init = async () => {
   const i18n = i18next.createInstance();
   i18n.init({
     lng: 'ru',
@@ -33,4 +33,4 @@ const Init = async () => {
   );
 };
 
-export default Init;
+export default init;
