@@ -17,11 +17,8 @@ const init = async () => {
       escapeValue: false,
     },
   });
-  filter.list();
-  filter.clearList();
   filter.add(filter.getDictionary('en'));
   filter.add(filter.getDictionary('ru'));
-  filter.list();
   return (
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>
