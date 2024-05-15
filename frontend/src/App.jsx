@@ -9,27 +9,25 @@ import 'react-toastify/dist/ReactToastify.css';
 import Signup from './pages/Signup';
 import Header from './components/Header';
 
-const App = () => {
-  const rollbarConfig = {
-    accessToken: process.env.REACT_APP_TOKEN_ACCESS,
-    environment: 'production',
-  };
-  return (
-    <Provider config={rollbarConfig}>
-      <ErrorBoundary>
-        <BrowserRouter>
-          <Header />
-          <Routes>
-            <Route path="*" element={<NotFound />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Routes>
-          <ToastContainer />
-        </BrowserRouter>
-      </ErrorBoundary>
-    </Provider>
-  );
+const rollbarConfig = {
+  accessToken: process.env.REACT_APP_TOKEN_ACCESS,
+  environment: 'production',
 };
+const App = () => (
+  <Provider config={rollbarConfig}>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+        <ToastContainer />
+      </BrowserRouter>
+    </ErrorBoundary>
+  </Provider>
+);
 
 export default App;
