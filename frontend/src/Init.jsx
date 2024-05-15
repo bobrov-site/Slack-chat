@@ -9,7 +9,7 @@ import resources from './locales';
 
 const init = async () => {
   const i18n = i18next.createInstance();
-  i18n.init({
+  await i18n.init({
     lng: 'ru',
     resources,
     debug: false,
