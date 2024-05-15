@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Signup from './pages/Signup';
 import Header from './components/Header';
+import PrivateRoute from './components/PrivateRoute';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_TOKEN_ACCESS,
@@ -20,7 +21,7 @@ const App = () => (
         <Header />
         <Routes>
           <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
