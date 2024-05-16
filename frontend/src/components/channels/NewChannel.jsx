@@ -7,8 +7,8 @@ import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import * as filter from 'leo-profanity';
-import { useGetChannelsQuery, useAddChannelMutation } from '../../slices/channelsSlice';
-import { changeChannel, setChannelModal } from '../../slices/appSlice';
+import { useGetChannelsQuery, useAddChannelMutation } from '../../api/channels';
+import { changeChannel, setChannelModal } from '../../store/slices/appSlice';
 
 const NewChannel = () => {
   const { t } = useTranslation();

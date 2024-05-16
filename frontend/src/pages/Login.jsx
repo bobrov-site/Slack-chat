@@ -10,8 +10,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { setUserData } from '../slices/appSlice';
-import { useLoginMutation } from '../slices/authSlice';
+import { setUserData } from '../store/slices/appSlice';
+import { useLoginMutation } from '../api/auth';
 import { appPaths } from '../routes';
 
 const Login = () => {

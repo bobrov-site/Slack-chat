@@ -13,9 +13,9 @@ import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import {
   useGetChannelsQuery, useRemoveChannelMutation, useUpdateChannelMutation, channelsApi,
-} from '../../slices/channelsSlice';
-import { changeChannel, setChannelModal } from '../../slices/appSlice';
-import { useGetMessagesQuery, useRemoveMessageMutation } from '../../slices/messagesSlice';
+} from '../../api/channels';
+import { changeChannel, setChannelModal } from '../../store/slices/appSlice';
+import { useGetMessagesQuery, useRemoveMessageMutation } from '../../api/messages';
 import NewChannel from './NewChannel';
 import socket from '../../socket';
 

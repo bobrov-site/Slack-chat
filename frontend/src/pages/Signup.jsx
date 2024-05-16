@@ -10,8 +10,8 @@ import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useTranslation } from 'react-i18next';
-import { useSignupMutation } from '../slices/authSlice';
-import { setUserData } from '../slices/appSlice';
+import { useSignupMutation } from '../api/auth';
+import { setUserData } from '../store/slices/appSlice';
 import { appPaths } from '../routes';
 
 const Signup = () => {

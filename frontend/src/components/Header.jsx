@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { setUserData } from '../slices/appSlice';
+import { setUserData } from '../store/slices/appSlice';
 
 const Header = () => {
   const dispatch = useDispatch();
