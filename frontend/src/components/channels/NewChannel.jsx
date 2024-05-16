@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import * as filter from 'leo-profanity';
 import { useGetChannelsQuery, useAddChannelMutation } from '../../slices/channelsSlice';
-import { changeChannel, setShowModal } from '../../slices/appSlice';
+import { changeChannel, setChannelModal } from '../../slices/appSlice';
 
 const NewChannel = () => {
   const { t } = useTranslation();
@@ -21,12 +21,12 @@ const NewChannel = () => {
     channelName: Yup.string().notOneOf(channelsNames, t('form.errors.channelExists')).min(3, t('form.errors.range')).max(20, t('form.errors.range'))
       .required(t('form.errors.required')),
   });
-  const handleShowModal = () => {
-    dispatch(setShowModal('new-channel'));
+  const handleShowModal = (modalName) => {
+    dispatch(setChannelModal({ id: '', name: '', modalName }));
   };
 
   const handleCloseModal = () => {
-    dispatch(setShowModal(''));
+    dispatch(setChannelModal({ id: '', name: '', modalName: '' }));
   };
   const handleFormSubmit = async (values) => {
     const { channelName } = values;
@@ -43,7 +43,7 @@ const NewChannel = () => {
   return (
     <div>
 
-      <Button size="sm" variant="outline-primary" onClick={() => handleShowModal()}>
+      <Button size="sm" variant="outline-primary" onClick={() => handleShowModal('new-channel')}>
         +
       </Button>
       <Modal show={showModal === 'new-channel'} onHide={handleCloseModal}>

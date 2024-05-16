@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import {
   useGetChannelsQuery, useRemoveChannelMutation, useUpdateChannelMutation, channelsApi,
 } from '../../slices/channelsSlice';
-import { changeChannel, setShowModal, setChannelModal } from '../../slices/appSlice';
+import { changeChannel, setChannelModal } from '../../slices/appSlice';
 import { useGetMessagesQuery, useRemoveMessageMutation } from '../../slices/messagesSlice';
 import NewChannel from './NewChannel';
 import socket from '../../socket';
@@ -45,16 +45,13 @@ const Channels = () => {
     }
   };
   const handleShowModal = (modalName, channel) => {
-    dispatch(setShowModal(modalName));
-    dispatch(setChannelModal({ id: channel.id, name: channel.name }));
+    dispatch(setChannelModal({ id: channel.id, name: channel.name, modalName }));
   };
 
   const handleCloseModal = () => {
-    dispatch(setShowModal(''));
-    dispatch(setChannelModal({ id: '', name: '' }));
+    dispatch(setChannelModal({ id: '', name: '', modalName: '' }));
   };
   const deleteChannel = async (id) => {
-    console.log(id);
     const filtredMessages = messages.filter((message) => message.channelId === id);
     if (filtredMessages.length > 0) {
       const promises = filtredMessages.map(async (message) => {
