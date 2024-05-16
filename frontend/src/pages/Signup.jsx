@@ -12,6 +12,7 @@ import Form from 'react-bootstrap/Form';
 import { useTranslation } from 'react-i18next';
 import { useSignupMutation } from '../slices/authSlice';
 import { setUserData } from '../slices/appSlice';
+import { appPaths } from '../routes';
 
 const Signup = () => {
   const { t } = useTranslation();
@@ -45,7 +46,7 @@ const Signup = () => {
     if (response.data) {
       localStorage.setItem('token', response.data.token);
       dispatch(setUserData({ nickname, token: response.data.token }));
-      return navigate('/');
+      return navigate(appPaths.home());
     }
     return null;
   };

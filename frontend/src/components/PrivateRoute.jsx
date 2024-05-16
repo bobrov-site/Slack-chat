@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { appPaths } from '../routes';
 
 const PrivateRoute = ({ children }) => {
   const { token } = useSelector((state) => state.app);
@@ -8,7 +9,7 @@ const PrivateRoute = ({ children }) => {
 
   useEffect(() => {
     if (!token) {
-      navigate('/login');
+      navigate(appPaths.login());
     }
   }, [token, navigate]);
 

@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { setUserData } from '../slices/appSlice';
 import { useLoginMutation } from '../slices/authSlice';
+import { appPaths } from '../routes';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -29,7 +30,7 @@ const Login = () => {
       dispatch(setUserData({ nickname, token: data.token }));
       localStorage.setItem('token', data.token);
       localStorage.setItem('nickname', nickname);
-      return navigate('/');
+      return navigate(appPaths.home());
     }
     if (error) {
       switch (error.status) {

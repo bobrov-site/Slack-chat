@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Signup from './pages/Signup';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
+import { appPaths } from './routes';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_TOKEN_ACCESS,
@@ -20,10 +21,10 @@ const App = () => (
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path={appPaths.notFound()} element={<NotFound />} />
+          <Route path={appPaths.home()} element={<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path={appPaths.login()} element={<Login />} />
+          <Route path={appPaths.signup()} element={<Signup />} />
         </Routes>
         <ToastContainer />
       </BrowserRouter>

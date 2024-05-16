@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import useSetHeaders from '../hooks';
-import routes from '../routes';
+import { apiPaths } from '../routes';
 
 export const authApi = createApi({
   reducerPath: 'auth',
   baseQuery: fetchBaseQuery(
-    { baseUrl: routes.apiPath, prepareHeaders: useSetHeaders, tagTypes: ['Auth'] },
+    { baseUrl: apiPaths.origin(), prepareHeaders: useSetHeaders, tagTypes: ['Auth'] },
   ),
   endpoints: (builder) => ({
     login: builder.mutation({
