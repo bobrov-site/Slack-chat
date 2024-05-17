@@ -11,10 +11,10 @@ import {
 } from '../../api/channels';
 import { changeChannel, setChannelModal } from '../../store/slices/appSlice';
 import { useGetMessagesQuery } from '../../api/messages';
-import NewChannel from './NewChannel';
 import socket from '../../socket';
 import RenameChannel from '../modals/RenameChannel';
 import DeleteChannel from '../modals/DeleteChannel';
+import NewChannel from '../modals/NewChannel';
 
 const Channels = () => {
   const { t } = useTranslation();
@@ -30,7 +30,7 @@ const Channels = () => {
       refetchMessages();
     }
   };
-  const handleShowModal = (modalName, channel) => {
+  const handleShowModal = (modalName, channel = { id: '', name: '' }) => {
     dispatch(setChannelModal({ id: channel.id, name: channel.name, modalName }));
   };
 
@@ -49,7 +49,9 @@ const Channels = () => {
     <Col xs="4" md="2" className="border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
         <b>{t('channels.title')}</b>
-        <NewChannel />
+        <Button size="sm" variant="outline-primary" onClick={() => handleShowModal('new-channel')}>
+          +
+        </Button>
       </div>
       <Nav className="flex-column nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {channels.map((channel) => (
@@ -81,6 +83,7 @@ const Channels = () => {
       </Nav>
       <RenameChannel />
       <DeleteChannel />
+      <NewChannel />
     </Col>
   );
 };
