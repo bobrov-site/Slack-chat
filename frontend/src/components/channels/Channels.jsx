@@ -10,7 +10,6 @@ import {
   useGetChannelsQuery, channelsApi,
 } from '../../api/channels';
 import { changeChannel, setChannelModal } from '../../store/slices/appSlice';
-import { useGetMessagesQuery } from '../../api/messages';
 import socket from '../../socket';
 import RenameChannel from '../modals/RenameChannel';
 import DeleteChannel from '../modals/DeleteChannel';
@@ -20,14 +19,12 @@ const Channels = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { data: channels = [] } = useGetChannelsQuery();
-  const { refetch: refetchMessages } = useGetMessagesQuery();
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
   const getVariantButton = (channel) => (channel.id === currentChannelId ? 'secondary' : 'light');
   const switchChannel = (channel) => {
     const { id, name } = channel;
     if (id !== currentChannelId) {
       dispatch(changeChannel({ id, name }));
-      refetchMessages();
     }
   };
   const handleShowModal = (modalName, channel = { id: '', name: '' }) => {
