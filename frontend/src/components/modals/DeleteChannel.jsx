@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useGetChannelsQuery, useRemoveChannelMutation } from '../../api/channels';
-import { useRemoveMessageMutation } from '../../api/messages';
 import { changeChannel, setChannelModal } from '../../store/slices/appSlice';
 
 const DeleteChannel = () => {
@@ -13,21 +12,11 @@ const DeleteChannel = () => {
   const showModal = useSelector((state) => state.app.showModal);
   const modalChannelId = useSelector((state) => state.app.modalChannelId);
   const { refetch: refetchChannels } = useGetChannelsQuery();
-  const { data: messages = [], refetch: refetchMessages } = useGetChannelsQuery();
   const [removeChannel] = useRemoveChannelMutation();
-  const [removeMessage] = useRemoveMessageMutation();
   const handleCloseModal = () => {
     dispatch(setChannelModal({ id: '', name: '', modalName: '' }));
   };
   const deleteChannel = async (id) => {
-    const filtredMessages = messages.filter((message) => message.channelId === id);
-    if (filtredMessages.length > 0) {
-      const promises = filtredMessages.map(async (message) => {
-        await removeMessage(message.id);
-      });
-      await Promise.all(promises);
-      refetchMessages();
-    }
     await removeChannel(id);
     refetchChannels();
     handleCloseModal();
