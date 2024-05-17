@@ -3,30 +3,25 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Modal from 'react-bootstrap/Modal';
-import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import {
-  useGetChannelsQuery, useRemoveChannelMutation, channelsApi,
+  useGetChannelsQuery, channelsApi,
 } from '../../api/channels';
 import { changeChannel, setChannelModal } from '../../store/slices/appSlice';
-import { useGetMessagesQuery, useRemoveMessageMutation } from '../../api/messages';
+import { useGetMessagesQuery } from '../../api/messages';
 import NewChannel from './NewChannel';
 import socket from '../../socket';
 import RenameChannel from '../modals/RenameChannel';
+import DeleteChannel from '../modals/DeleteChannel';
 
 const Channels = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { data: channels = [], refetch: refetchChannels } = useGetChannelsQuery();
-  const showModal = useSelector((state) => state.app.showModal);
-  const [removeChannel] = useRemoveChannelMutation();
-  const { data: messages = [], refetch: refetchMessages } = useGetMessagesQuery();
-  const [removeMessage] = useRemoveMessageMutation();
+  const { data: channels = [] } = useGetChannelsQuery();
+  const { refetch: refetchMessages } = useGetMessagesQuery();
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
-  const modalChannelId = useSelector((state) => state.app.modalChannelId);
   const getVariantButton = (channel) => (channel.id === currentChannelId ? 'secondary' : 'light');
   const switchChannel = (channel) => {
     const { id, name } = channel;
@@ -39,24 +34,6 @@ const Channels = () => {
     dispatch(setChannelModal({ id: channel.id, name: channel.name, modalName }));
   };
 
-  const handleCloseModal = () => {
-    dispatch(setChannelModal({ id: '', name: '', modalName: '' }));
-  };
-  const deleteChannel = async (id) => {
-    const filtredMessages = messages.filter((message) => message.channelId === id);
-    if (filtredMessages.length > 0) {
-      const promises = filtredMessages.map(async (message) => {
-        await removeMessage(message.id);
-      });
-      await Promise.all(promises);
-      refetchMessages();
-    }
-    await removeChannel(id);
-    refetchChannels();
-    handleCloseModal();
-    dispatch(changeChannel({ id: '1', name: 'general' }));
-    toast.success(t('toast.deleteChannel'));
-  };
   useEffect(() => {
     const handleNewChannel = (channel) => {
       dispatch(channelsApi.util.updateQueryData('getChannels', undefined, (draft) => {
@@ -103,18 +80,7 @@ const Channels = () => {
         ))}
       </Nav>
       <RenameChannel />
-      <Modal show={showModal === 'delete-channel'} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>{t('modals.titleDeleteChannel')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>{t('modals.textDeleteChannel')}</p>
-          <div className="d-flex justify-content-end mt-2">
-            <Button type="button" variant="secondary" onClick={handleCloseModal} className="me-2">{t('form.buttons.cancel')}</Button>
-            <Button type="button" variant="danger" onClick={() => deleteChannel(modalChannelId)}>{t('form.buttons.delete')}</Button>
-          </div>
-        </Modal.Body>
-      </Modal>
+      <DeleteChannel />
     </Col>
   );
 };
