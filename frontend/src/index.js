@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import React from 'react';
-import init from './init';
+import init from './init.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const html = document.querySelector('html');
