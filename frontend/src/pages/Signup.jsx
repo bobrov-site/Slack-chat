@@ -19,7 +19,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [signup] = useSignupMutation();
-  const SignupSchema = Yup.object().shape({
+  const signupSchema = Yup.object().shape({
     nickname: Yup.string().required(t('form.errors.required')).min(3, t('form.errors.range')).max(20, t('form.errors.range')),
     password: Yup.string().required(t('form.errors.required')).min(6, t('form.errors.min')),
     passwordConfirm: Yup.string().required(t('form.errors.required')).oneOf([Yup.ref('password'), null], t('form.errors.passwordMustMatch')),
@@ -63,7 +63,7 @@ const Signup = () => {
                 <Formik
                   initialValues={{ nickname: '', password: '', passwordConfirm: '' }}
                   onSubmit={handleFormSubmit}
-                  validationSchema={SignupSchema}
+                  validationSchema={signupSchema}
                   validateOnChange={false}
                 >
                   {({

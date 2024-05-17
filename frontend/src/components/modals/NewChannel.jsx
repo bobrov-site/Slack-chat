@@ -17,7 +17,7 @@ const NewChannel = () => {
   const { data: channels = [], refetch: refetchChannels } = useGetChannelsQuery();
   const [addChannel] = useAddChannelMutation();
   const channelsNames = channels.map((channel) => channel.name);
-  const ChannelNameSchema = Yup.object().shape({
+  const channelNameSchema = Yup.object().shape({
     channelName: Yup.string().notOneOf(channelsNames, t('form.errors.channelExists')).min(3, t('form.errors.range')).max(20, t('form.errors.range'))
       .required(t('form.errors.required')),
   });
@@ -46,7 +46,7 @@ const NewChannel = () => {
         <Formik
           initialValues={{ channelName: '' }}
           onSubmit={handleFormSubmit}
-          validationSchema={ChannelNameSchema}
+          validationSchema={channelNameSchema}
         >
           {({
             values, handleChange, handleSubmit, errors,
