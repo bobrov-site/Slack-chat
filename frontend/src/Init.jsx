@@ -7,7 +7,7 @@ import store from './store';
 import App from './App';
 import resources from './locales';
 
-const init = async () => {
+const Init = async () => {
   const i18n = i18next.createInstance();
   await i18n.init({
     lng: 'ru',
@@ -30,4 +30,4 @@ const init = async () => {
   );
 };
 
-export default init;
+export default Init;
