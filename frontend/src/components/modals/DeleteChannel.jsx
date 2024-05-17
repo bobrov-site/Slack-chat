@@ -18,10 +18,14 @@ const DeleteChannel = () => {
     dispatch(setChannelModal({ id: '', name: '', modalName: '' }));
   };
   const deleteChannel = async (id) => {
-    await removeChannel(id);
-    handleCloseModal();
-    dispatch(changeChannel({ id: '1', name: 'general' }));
-    toast.success(t('toast.deleteChannel'));
+    try {
+      await removeChannel(id).unwrap();
+      handleCloseModal();
+      dispatch(changeChannel({ id: '1', name: 'general' }));
+      toast.success(t('toast.deleteChannel'));
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   useEffect(() => {
