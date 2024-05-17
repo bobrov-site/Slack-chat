@@ -3,26 +3,36 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { useGetChannelsQuery, useRemoveChannelMutation } from '../../api/channels';
+import { useEffect } from 'react';
+import { useRemoveChannelMutation, channelsApi } from '../../api/channels';
 import { changeChannel, setChannelModal } from '../../store/slices/appSlice';
+import socket from '../../socket';
 
 const DeleteChannel = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const showModal = useSelector((state) => state.app.showModal);
   const modalChannelId = useSelector((state) => state.app.modalChannelId);
-  const { refetch: refetchChannels } = useGetChannelsQuery();
   const [removeChannel] = useRemoveChannelMutation();
   const handleCloseModal = () => {
     dispatch(setChannelModal({ id: '', name: '', modalName: '' }));
   };
   const deleteChannel = async (id) => {
     await removeChannel(id);
-    refetchChannels();
     handleCloseModal();
     dispatch(changeChannel({ id: '1', name: 'general' }));
     toast.success(t('toast.deleteChannel'));
   };
+
+  useEffect(() => {
+    const handleRemoveChannel = ({ id }) => {
+      dispatch(channelsApi.util.updateQueryData('getChannels', undefined, (draft) => draft.filter((curChannels) => curChannels.id !== id)));
+    };
+    socket.on('removeChannel', handleRemoveChannel);
+    return () => {
+      socket.off('removeChannel');
+    };
+  });
   return (
     <Modal show={showModal === 'delete-channel'} onHide={handleCloseModal}>
       <Modal.Header closeButton>

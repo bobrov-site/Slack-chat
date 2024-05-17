@@ -6,8 +6,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
-import { useGetChannelsQuery, useUpdateChannelMutation } from '../../api/channels';
+import { useEffect } from 'react';
+import { useGetChannelsQuery, useUpdateChannelMutation, channelsApi } from '../../api/channels';
 import { setChannelModal, changeChannel } from '../../store/slices/appSlice';
+import socket from '../../socket';
 
 const RenameChannel = () => {
   const { t } = useTranslation();
@@ -16,7 +18,7 @@ const RenameChannel = () => {
   const showModal = useSelector((state) => state.app.showModal);
   const modalChannelId = useSelector((state) => state.app.modalChannelId);
   const modalChannelName = useSelector((state) => state.app.modalChannelName);
-  const { data: channels = [], refetch: refetchChannels } = useGetChannelsQuery();
+  const { data: channels = [] } = useGetChannelsQuery();
   const channelsNames = channels.map((channel) => channel.name);
   const channelNameSchema = Yup.object().shape({
     channelName: Yup.string().notOneOf(channelsNames, t('form.errors.channelExists')).min(3, t('form.errors.range')).max(20, t('form.errors.range'))
@@ -33,11 +35,24 @@ const RenameChannel = () => {
     data.removable = true;
     data.id = channelId;
     await updateChannel(data);
-    refetchChannels();
     handleCloseModal();
     dispatch(changeChannel({ id: channelId, name: channelName }));
     toast.success(t('toast.renameChannel'));
   };
+
+  useEffect(() => {
+    const handleRenameChannel = ({ id, name }) => {
+      dispatch(channelsApi.util.updateQueryData('getChannels', undefined, (draft) => {
+        const channel = draft;
+        const index = channel.findIndex((curChannels) => curChannels.id === id);
+        channel[index].name = name;
+      }));
+    };
+    socket.on('renameChannel', handleRenameChannel);
+    return () => {
+      socket.off('renameChannel');
+    };
+  });
   return (
     <Modal show={showModal === 'rename-channel'} onHide={handleCloseModal}>
       <Modal.Header closeButton>

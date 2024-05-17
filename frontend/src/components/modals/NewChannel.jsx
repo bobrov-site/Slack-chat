@@ -14,7 +14,7 @@ const NewChannel = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const showModal = useSelector((state) => state.app.showModal);
-  const { data: channels = [], refetch: refetchChannels } = useGetChannelsQuery();
+  const { data: channels = [] } = useGetChannelsQuery();
   const [addChannel] = useAddChannelMutation();
   const channelsNames = channels.map((channel) => channel.name);
   const channelNameSchema = Yup.object().shape({
@@ -33,7 +33,6 @@ const NewChannel = () => {
     const response = await addChannel(data);
     const { id, name } = response.data;
     dispatch(changeChannel({ id, name }));
-    refetchChannels();
     handleCloseModal();
     toast.success(t('toast.addChannel'));
   };
