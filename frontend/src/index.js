@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import React from 'react';
-import Init from './Init.jsx';
+import init from './init.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const html = document.querySelector('html');
@@ -10,6 +10,6 @@ body.classList.add('h-100');
 document.getElementById('root').classList.add('h-100');
 root.render(
   <React.StrictMode>
-    {await Init()}
+    {await init()}
   </React.StrictMode>,
 );
