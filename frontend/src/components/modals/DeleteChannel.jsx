@@ -12,6 +12,7 @@ const DeleteChannel = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const showModal = useSelector((state) => state.app.showModal);
+  const currentChannelId = useSelector((state) => state.app.currentChannelId);
   const modalChannelId = useSelector((state) => state.app.modalChannelId);
   const [removeChannel] = useRemoveChannelMutation();
   const handleCloseModal = () => {
@@ -21,7 +22,9 @@ const DeleteChannel = () => {
     try {
       await removeChannel(id).unwrap();
       handleCloseModal();
-      dispatch(changeChannel({ id: '1', name: 'general' }));
+      if (id === currentChannelId) {
+        dispatch(changeChannel({ id: '1', name: 'general' }));
+      }
       toast.success(t('toast.deleteChannel'));
     } catch (e) {
       console.error(e);
