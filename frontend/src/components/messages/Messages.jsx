@@ -21,14 +21,19 @@ const Messages = () => {
   const filtredMessages = messages.filter((message) => message.channelId === currentChannelId);
   const [addMessage] = useAddMessageMutation();
   const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
-    const data = {};
-    const { message } = values;
-    data.message = filter.clean(message);
-    data.channelId = currentChannelId;
-    data.username = username;
-    await addMessage(data);
-    resetForm();
-    setSubmitting(false);
+    try {
+      const { message } = values;
+      const data = {
+        message: filter.clean(message),
+        channelId: currentChannelId,
+        username,
+      };
+      await addMessage(data);
+      resetForm();
+      setSubmitting(false);
+    } catch (e) {
+      console.error(e);
+    }
   };
   useEffect(() => {
     const handleNewMessage = (newMessage) => {
