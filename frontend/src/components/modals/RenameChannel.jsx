@@ -6,13 +6,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useGetChannelsQuery, useUpdateChannelMutation, channelsApi } from '../../api/channels';
 import { setChannelModal, changeChannel } from '../../store/slices/appSlice';
 import socket from '../../socket';
 
 const RenameChannel = () => {
   const { t } = useTranslation();
+  const input = useRef();
   const dispatch = useDispatch();
   const [updateChannel] = useUpdateChannelMutation();
   const showModal = useSelector((state) => state.app.showModal);
@@ -46,6 +47,12 @@ const RenameChannel = () => {
   };
 
   useEffect(() => {
+    if (input.current) {
+      input.current.focus();
+    }
+  });
+
+  useEffect(() => {
     const handleRenameChannel = ({ id, name }) => {
       dispatch(channelsApi.util.updateQueryData('getChannels', undefined, (draft) => {
         const channel = draft;
@@ -74,7 +81,7 @@ const RenameChannel = () => {
           }) => (
             <Form onSubmit={handleSubmit}>
               <Form.Label htmlFor="channelName" visuallyHidden>{t('form.labels.channelName')}</Form.Label>
-              <Form.Control value={values.channelName} name="channelName" onChange={handleChange} id="channelName" isInvalid={!!errors.channelName} autoFocus />
+              <Form.Control ref={input} value={values.channelName} name="channelName" onChange={handleChange} id="channelName" isInvalid={!!errors.channelName} autoFocus />
               <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
               <div className="d-flex justify-content-end mt-2">
                 <Button type="button" variant="secondary" onClick={handleCloseModal} className="me-2">{t('form.buttons.cancel')}</Button>
