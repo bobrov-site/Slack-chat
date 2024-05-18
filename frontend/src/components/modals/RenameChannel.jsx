@@ -57,7 +57,7 @@ const RenameChannel = () => {
     return () => {
       socket.off('renameChannel');
     };
-  });
+  }, [dispatch]);
   return (
     <Modal show={showModal === 'rename-channel'} onHide={handleCloseModal}>
       <Modal.Header closeButton>

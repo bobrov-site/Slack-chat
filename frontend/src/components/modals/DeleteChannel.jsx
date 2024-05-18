@@ -39,7 +39,7 @@ const DeleteChannel = () => {
     return () => {
       socket.off('removeChannel');
     };
-  });
+  }, [dispatch]);
   return (
     <Modal show={showModal === 'delete-channel'} onHide={handleCloseModal}>
       <Modal.Header closeButton>

@@ -14,7 +14,7 @@ import socket from '../../socket';
 const Messages = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { data: messages = [], refetch } = useGetMessagesQuery();
+  const { data: messages = [] } = useGetMessagesQuery();
   const username = useSelector((state) => state.app.username);
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
   const currentChannelName = useSelector((state) => state.app.currentChannelName);
@@ -40,7 +40,7 @@ const Messages = () => {
     return () => {
       socket.off('newMessage');
     };
-  }, [dispatch, refetch]);
+  }, [dispatch]);
   return (
     <Col className="p-0 h-100">
       <div className="d-flex flex-column h-100">
