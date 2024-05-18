@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import { useSelector, useDispatch } from 'react-redux';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Formik } from 'formik';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as filter from 'leo-profanity';
 import { useGetMessagesQuery, useAddMessageMutation, messagesApi } from '../../api/messages';
@@ -20,6 +20,7 @@ const Messages = () => {
   const currentChannelName = useSelector((state) => state.app.currentChannelName);
   const filtredMessages = messages.filter((message) => message.channelId === currentChannelId);
   const [addMessage] = useAddMessageMutation();
+  const messagesContainer = useRef();
   const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       const { message } = values;
@@ -36,6 +37,11 @@ const Messages = () => {
     }
   };
   useEffect(() => {
+    if (messagesContainer.current) {
+      messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
+    }
+  });
+  useEffect(() => {
     const handleNewMessage = (newMessage) => {
       dispatch(messagesApi.util.updateQueryData('getMessages', undefined, (draft) => {
         draft.push(newMessage);
@@ -45,7 +51,7 @@ const Messages = () => {
     return () => {
       socket.off('newMessage');
     };
-  }, [dispatch]);
+  }, [dispatch, messagesContainer]);
   return (
     <Col className="p-0 h-100">
       <div className="d-flex flex-column h-100">
@@ -61,7 +67,7 @@ const Messages = () => {
             {t('messages.messages')}
           </span>
         </div>
-        <div className="overflow-auto px-5">
+        <div className="overflow-auto px-5" ref={messagesContainer}>
           {filtredMessages.map((message) => (
             <div className="text-break mb-2" key={message.id}>
               <b>{message.username}</b>
