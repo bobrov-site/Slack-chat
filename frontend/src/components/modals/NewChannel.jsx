@@ -26,15 +26,19 @@ const NewChannel = () => {
     dispatch(setChannelModal({ id: '', name: '', modalName: '' }));
   };
   const handleFormSubmit = async (values) => {
-    const { channelName } = values;
-    const data = {};
-    data.name = filter.clean(channelName);
-    data.removable = true;
-    const response = await addChannel(data);
-    const { id, name } = response.data;
-    dispatch(changeChannel({ id, name }));
-    handleCloseModal();
-    toast.success(t('toast.addChannel'));
+    try {
+      const { channelName } = values;
+      const data = {};
+      data.name = filter.clean(channelName);
+      data.removable = true;
+      const response = await addChannel(data);
+      const { id, name } = response.data;
+      dispatch(changeChannel({ id, name }));
+      handleCloseModal();
+      toast.success(t('toast.addChannel'));
+    } catch (e) {
+      console.error(e);
+    }
   };
   return (
     <Modal show={showModal === 'new-channel'} onHide={handleCloseModal}>

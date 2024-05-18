@@ -29,16 +29,20 @@ const RenameChannel = () => {
     dispatch(setChannelModal({ id: '', name: '', modalName: '' }));
   };
   const renameChannel = async (values) => {
-    const { channelName, channelId } = values;
-    const data = {
-      name: channelName,
-      removable: true,
-      id: channelId,
-    };
-    await updateChannel(data);
-    handleCloseModal();
-    dispatch(changeChannel({ id: channelId, name: channelName }));
-    toast.success(t('toast.renameChannel'));
+    try {
+      const { channelName, channelId } = values;
+      const data = {
+        name: channelName,
+        removable: true,
+        id: channelId,
+      };
+      await updateChannel(data).unwrap();
+      handleCloseModal();
+      dispatch(changeChannel({ id: channelId, name: channelName }));
+      toast.success(t('toast.renameChannel'));
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   useEffect(() => {
