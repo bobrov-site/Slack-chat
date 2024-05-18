@@ -30,10 +30,11 @@ const RenameChannel = () => {
   };
   const renameChannel = async (values) => {
     const { channelName, channelId } = values;
-    const data = {};
-    data.name = channelName;
-    data.removable = true;
-    data.id = channelId;
+    const data = {
+      name: channelName,
+      removable: true,
+      id: channelId,
+    };
     await updateChannel(data);
     handleCloseModal();
     dispatch(changeChannel({ id: channelId, name: channelName }));
