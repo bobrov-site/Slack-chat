@@ -1,32 +1,23 @@
 import Nav from 'react-bootstrap/Nav';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import Dropdown from 'react-bootstrap/Dropdown';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import {
   useGetChannelsQuery, channelsApi,
 } from '../../api/channels';
-import { changeChannel, setChannelModal } from '../../store/slices/appSlice';
+import { setChannelModal } from '../../store/slices/appSlice';
 import socket from '../../socket';
 import RenameChannel from '../modals/RenameChannel';
 import DeleteChannel from '../modals/DeleteChannel';
 import NewChannel from '../modals/NewChannel';
+import Item from './Item';
 
 const Channels = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { data: channels = [] } = useGetChannelsQuery();
-  const currentChannelId = useSelector((state) => state.app.currentChannelId);
-  const getVariantButton = (channel) => (channel.id === currentChannelId ? 'secondary' : 'light');
-  const switchChannel = (channel) => {
-    const { id, name } = channel;
-    if (id !== currentChannelId) {
-      dispatch(changeChannel({ id, name }));
-    }
-  };
   const handleShowModal = (modalName, channel = { id: '', name: '' }) => {
     dispatch(setChannelModal({ id: channel.id, name: channel.name, modalName }));
   };
@@ -52,30 +43,7 @@ const Channels = () => {
       </div>
       <Nav className="flex-column nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {channels.map((channel) => (
-          <Nav.Item key={channel.id}>
-            {channel.removable ? (
-              <Dropdown as={ButtonGroup} drop="down" className="w-100">
-                <Button onClick={() => switchChannel(channel)} className="w-100 rounded-0 text-start text-truncate" variant={getVariantButton(channel)}>{`# ${channel.name}`}</Button>
-
-                <Dropdown.Toggle as={Button} className="text-end" split variant={getVariantButton(channel)} id={`dropdown-split-button${channel.id}`}>
-                  <span className="visually-hidden">{t('dropdown.toggle')}</span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => handleShowModal('delete-channel', channel)}>{t('channels.dropdown.delete')}</Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleShowModal('rename-channel', channel)}>{t('channels.dropdown.rename')}</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            ) : (
-              <Button
-                as={ButtonGroup}
-                variant={getVariantButton(channel)}
-                className="w-100 text-start rounded-0 text-truncate"
-                onClick={() => switchChannel(channel)}
-              >
-                {`# ${channel.name}`}
-              </Button>
-            )}
-          </Nav.Item>
+          <Item key={channel.id} data={channel} />
         ))}
       </Nav>
       <RenameChannel />
