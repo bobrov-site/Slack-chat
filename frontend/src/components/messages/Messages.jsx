@@ -1,41 +1,19 @@
 import Col from 'react-bootstrap/esm/Col';
-import Button from 'react-bootstrap/esm/Button';
-import { Send } from 'react-bootstrap-icons';
-import Form from 'react-bootstrap/Form';
 import { useSelector, useDispatch } from 'react-redux';
-import InputGroup from 'react-bootstrap/InputGroup';
-import { Formik } from 'formik';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import * as filter from 'leo-profanity';
-import { useGetMessagesQuery, useAddMessageMutation, messagesApi } from '../../api/messages';
+import { useGetMessagesQuery, messagesApi } from '../../api/messages';
 import socket from '../../socket';
+import MessagesForm from './MessagesForm';
 
 const Messages = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { data: messages = [] } = useGetMessagesQuery();
-  const username = useSelector((state) => state.app.username);
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
   const currentChannelName = useSelector((state) => state.app.currentChannelName);
   const filtredMessages = messages.filter((message) => message.channelId === currentChannelId);
-  const [addMessage] = useAddMessageMutation();
   const messagesContainer = useRef();
-  const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
-    try {
-      const { message } = values;
-      const data = {
-        message: filter.clean(message),
-        channelId: currentChannelId,
-        username,
-      };
-      await addMessage(data);
-      resetForm();
-      setSubmitting(false);
-    } catch (e) {
-      console.error(e);
-    }
-  };
   useEffect(() => {
     if (messagesContainer.current) {
       messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
@@ -76,21 +54,7 @@ const Messages = () => {
             </div>
           ))}
         </div>
-        <div className="mt-auto py-3 px-5">
-          <Formik initialValues={{ message: '' }} onSubmit={handleFormSubmit}>
-            {({ handleSubmit, handleChange, values }) => (
-              <Form onSubmit={handleSubmit}>
-                <InputGroup>
-                  <Form.Label htmlFor="new-message" hidden>{t('form.labels.message')}</Form.Label>
-                  <Form.Control placeholder={t('form.placeholders.message')} autoFocus id="new-message" aria-label={t('form.labels.newMessage')} value={values.message} onChange={handleChange} type="text" name="message" />
-                  <Button type="submit">
-                    <Send />
-                  </Button>
-                </InputGroup>
-              </Form>
-            )}
-          </Formik>
-        </div>
+        <MessagesForm />
       </div>
     </Col>
   );
