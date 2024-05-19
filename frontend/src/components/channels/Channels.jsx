@@ -4,25 +4,32 @@ import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   useGetChannelsQuery, channelsApi,
 } from '../../api/channels';
-import { setChannelModal } from '../../store/slices/appSlice';
+import { setChannelModal, setUserData } from '../../store/slices/appSlice';
 import socket from '../../socket';
 import RenameChannel from '../modals/RenameChannel';
 import DeleteChannel from '../modals/DeleteChannel';
 import NewChannel from '../modals/NewChannel';
 import Item from './Item';
+import { appPaths } from '../../routes';
 
 const Channels = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { data: channels = [] } = useGetChannelsQuery();
+  const navigate = useNavigate();
+  const { data: channels = [], error: channelError } = useGetChannelsQuery();
   const handleShowModal = (modalName, channel = { id: '', name: '' }) => {
     dispatch(setChannelModal({ id: channel.id, name: channel.name, modalName }));
   };
 
   useEffect(() => {
+    if (channelError) {
+      dispatch(setUserData({ nickname: '', token: null }));
+      navigate(appPaths.login());
+    }
     const handleNewChannel = (channel) => {
       dispatch(channelsApi.util.updateQueryData('getChannels', undefined, (draft) => {
         draft.push(channel);
@@ -32,7 +39,7 @@ const Channels = () => {
     return () => {
       socket.off('newChannel');
     };
-  }, [dispatch]);
+  }, [dispatch, channelError, navigate]);
   return (
     <Col xs="4" md="2" className="border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
