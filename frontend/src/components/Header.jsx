@@ -6,14 +6,15 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { setUserData } from '../store/slices/appSlice';
+import { useAuth } from '../hooks';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const { logOut } = useAuth();
   const { t } = useTranslation();
   const app = useSelector((state) => state.app);
-  const logOut = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('nickname');
+  const logOutUser = () => {
+    logOut();
     dispatch(setUserData({ nickname: '', token: null }));
   };
   return (
@@ -26,7 +27,7 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             {app.token ? (
-              <Button onClick={() => logOut()} variant="primary">{t('header.logout')}</Button>
+              <Button onClick={() => logOutUser()} variant="primary">{t('header.logout')}</Button>
             ) : (
               ''
             )}

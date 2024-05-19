@@ -15,11 +15,13 @@ import DeleteChannel from '../modals/DeleteChannel';
 import NewChannel from '../modals/NewChannel';
 import Item from './Item';
 import { appPaths } from '../../routes';
+import { useAuth } from '../../hooks';
 
 const Channels = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { logOut } = useAuth();
   const { data: channels = [], error: channelError } = useGetChannelsQuery();
   const handleShowModal = (modalName, channel = { id: '', name: '' }) => {
     dispatch(setChannelModal({ id: channel.id, name: channel.name, modalName }));
@@ -27,6 +29,7 @@ const Channels = () => {
 
   useEffect(() => {
     if (channelError) {
+      logOut();
       dispatch(setUserData({ nickname: '', token: null }));
       navigate(appPaths.login());
     }
@@ -39,7 +42,7 @@ const Channels = () => {
     return () => {
       socket.off('newChannel');
     };
-  }, [dispatch, channelError, navigate]);
+  }, [dispatch, channelError, navigate, logOut]);
   return (
     <Col xs="4" md="2" className="border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">

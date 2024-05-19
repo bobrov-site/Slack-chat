@@ -13,9 +13,11 @@ import { toast } from 'react-toastify';
 import { setUserData } from '../store/slices/appSlice';
 import { useLoginMutation } from '../api/auth';
 import { appPaths } from '../routes';
+import { useAuth } from '../hooks';
 
 const Login = () => {
   const { t } = useTranslation();
+  const { logIn } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
@@ -28,8 +30,7 @@ const Login = () => {
     const { data, error } = await login(user);
     if (data) {
       dispatch(setUserData({ nickname, token: data.token }));
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('nickname', nickname);
+      logIn(data.token, nickname);
       return navigate(appPaths.home());
     }
     if (error) {

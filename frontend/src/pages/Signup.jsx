@@ -13,9 +13,11 @@ import { useTranslation } from 'react-i18next';
 import { useSignupMutation } from '../api/auth';
 import { setUserData } from '../store/slices/appSlice';
 import { appPaths } from '../routes';
+import { useAuth } from '../hooks';
 
 const Signup = () => {
   const { t } = useTranslation();
+  const { logIn } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [signup] = useSignupMutation();
@@ -44,7 +46,7 @@ const Signup = () => {
       }
     }
     if (response.data) {
-      localStorage.setItem('token', response.data.token);
+      logIn(response.data.token, nickname);
       dispatch(setUserData({ nickname, token: response.data.token }));
       return navigate(appPaths.home());
     }
