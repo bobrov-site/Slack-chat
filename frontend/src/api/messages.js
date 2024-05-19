@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import useSetHeaders from '../hooks';
+import { useSetHeaders } from '../hooks';
 import { apiPaths } from '../routes';
 
 export const messagesApi = createApi({

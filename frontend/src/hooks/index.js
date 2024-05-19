@@ -1,3 +1,4 @@
 import useSetHeaders from './useSetHeaders';
+import useAuth from './useAuth';
 
-export default useSetHeaders;
+export { useSetHeaders, useAuth };
