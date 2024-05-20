@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { setUserData } from '../store/slices/appSlice';
-import { useAuth } from '../hooks';
+import useAuth from '../hooks';
 
 const Header = () => {
   const dispatch = useDispatch();

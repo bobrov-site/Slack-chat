@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 import { setUserData } from '../store/slices/appSlice';
 import { useLoginMutation } from '../api/auth';
 import { appPaths } from '../routes';
-import { useAuth } from '../hooks';
+import useAuth from '../hooks';
 
 const Login = () => {
   const { t } = useTranslation();

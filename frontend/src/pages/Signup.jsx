@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { useSignupMutation } from '../api/auth';
 import { setUserData } from '../store/slices/appSlice';
 import { appPaths } from '../routes';
-import { useAuth } from '../hooks';
+import useAuth from '../hooks';
 
 const Signup = () => {
   const { t } = useTranslation();

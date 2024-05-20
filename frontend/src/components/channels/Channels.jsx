@@ -15,7 +15,7 @@ import DeleteChannel from '../modals/DeleteChannel';
 import NewChannel from '../modals/NewChannel';
 import Item from './Item';
 import { appPaths } from '../../routes';
-import { useAuth } from '../../hooks';
+import useAuth from '../../hooks';
 
 const Channels = () => {
   const { t } = useTranslation();
