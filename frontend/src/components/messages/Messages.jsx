@@ -18,7 +18,7 @@ const Messages = () => {
     if (messagesContainer.current) {
       messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
     }
-  });
+  }, [messages]);
   useEffect(() => {
     const handleNewMessage = (newMessage) => {
       dispatch(messagesApi.util.updateQueryData('getMessages', undefined, (draft) => {
