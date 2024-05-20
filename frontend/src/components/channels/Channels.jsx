@@ -33,6 +33,9 @@ const Channels = () => {
       dispatch(setUserData({ nickname: '', token: null }));
       navigate(appPaths.login());
     }
+  }, [channelError, navigate, dispatch, logOut]);
+
+  useEffect(() => {
     const handleNewChannel = (channel) => {
       dispatch(channelsApi.util.updateQueryData('getChannels', undefined, (draft) => {
         draft.push(channel);
@@ -42,7 +45,7 @@ const Channels = () => {
     return () => {
       socket.off('newChannel');
     };
-  }, [dispatch, channelError, navigate, logOut]);
+  }, [dispatch, logOut]);
   return (
     <Col xs="4" md="2" className="border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
