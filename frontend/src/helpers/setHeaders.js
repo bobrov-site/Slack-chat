@@ -1,4 +1,4 @@
-const useSetHeaders = (headers) => {
+const setHeaders = (headers) => {
   const token = localStorage.getItem('token');
   if (!token) {
     headers.set('Authorization', `Bearer ${null}`);
@@ -8,4 +8,4 @@ const useSetHeaders = (headers) => {
   return headers;
 };
 
-export default useSetHeaders;
+export default setHeaders;

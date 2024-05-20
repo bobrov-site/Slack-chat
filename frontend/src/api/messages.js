@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { useSetHeaders } from '../hooks';
+import setHeaders from '../helpers/setHeaders';
 import { apiPaths } from '../routes';
 
 export const messagesApi = createApi({
   reducerPath: 'messages',
   baseQuery: fetchBaseQuery(
-    { baseUrl: apiPaths.messages(), prepareHeaders: useSetHeaders, tagTypes: ['Messages'] },
+    { baseUrl: apiPaths.messages(), prepareHeaders: setHeaders, tagTypes: ['Messages'] },
   ),
   tagTypes: ['Messages'],
   endpoints: (builder) => ({
