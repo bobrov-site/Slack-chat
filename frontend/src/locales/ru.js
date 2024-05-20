@@ -26,6 +26,9 @@ export default {
         link: 'Вход',
       },
     },
+    notFoundPage: {
+      title: 'Страница не найдена',
+    },
     channels: {
       title: 'Каналы',
       dropdown: {
