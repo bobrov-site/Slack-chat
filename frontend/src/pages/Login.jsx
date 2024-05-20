@@ -88,7 +88,7 @@ const Login = () => {
                 <span>
                   {t('loginPage.footer.text')}
                   {' '}
-                  <Link to={appPaths.signup}>{t('loginPage.footer.link')}</Link>
+                  <Link to={appPaths.signup()}>{t('loginPage.footer.link')}</Link>
                 </span>
               </div>
             </Card.Footer>
