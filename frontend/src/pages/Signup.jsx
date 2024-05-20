@@ -32,10 +32,14 @@ const Signup = () => {
       username: nickname,
       password,
     };
-    const response = await signup(user);
-    if (response.error) {
-      const { status } = response.error;
-      switch (status) {
+    const { data, error } = await signup(user);
+    if (data) {
+      logIn(data.token, nickname);
+      dispatch(setUserData({ nickname, token: data.token }));
+      navigate(appPaths.home());
+    }
+    if (error) {
+      switch (error.status) {
         case 409: {
           setErrors({ nickname: t('form.errors.userExists') });
           break;
@@ -45,12 +49,6 @@ const Signup = () => {
         }
       }
     }
-    if (response.data) {
-      logIn(response.data.token, nickname);
-      dispatch(setUserData({ nickname, token: response.data.token }));
-      return navigate(appPaths.home());
-    }
-    return null;
   };
   return (
     <Container className="mb-auto mt-auto">
@@ -88,7 +86,7 @@ const Signup = () => {
                         <Form.Control required id="paswordConfirm" value={values.passwordConfirm} onChange={handleChange} type="password" name="passwordConfirm" isInvalid={!!errors.passwordConfirm} />
                         <Form.Control.Feedback type="invalid">{errors.passwordConfirm}</Form.Control.Feedback>
                       </Form.Group>
-                      <Button type="submit" className="w-100" variant="outline-primary">Зарегистрироваться</Button>
+                      <Button type="submit" className="w-100" variant="outline-primary">{t('signupPage.button')}</Button>
                     </Form>
                   )}
                 </Formik>
