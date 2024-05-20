@@ -25,6 +25,7 @@ const MessagesForm = () => {
       resetForm();
       setSubmitting(false);
     } catch (e) {
+      setSubmitting(false);
       console.error(e);
     }
   };
