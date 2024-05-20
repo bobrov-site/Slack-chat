@@ -50,54 +50,52 @@ const Login = () => {
     }
   };
   return (
-    (
-      <Container className="mb-auto mt-auto">
-        <Row className="justify-content-center">
-          <Col xs="12" md="8" xxl="8">
-            <Card className="shadow-sm">
-              <Card.Body className="row">
-                <Col xs="12" md="6" className="d-flex align-items-center justify-content-center">
-                  <Image src="login.jpeg" alt={t('loginPage.title')} />
-                </Col>
-                <Col xs="12" md="6">
-                  <Formik
-                    initialValues={{ nickname: '', password: '' }}
-                    onSubmit={handleFormSubmit}
-                  >
-                    {({
-                      handleSubmit, handleChange, values, errors,
-                    }) => (
-                      <Form onSubmit={handleSubmit} className="form">
-                        <h1>{t('loginPage.title')}</h1>
-                        <Form.Group className="mb-3">
-                          <Form.Label htmlFor="nickname">{t('loginPage.nickname')}</Form.Label>
-                          <Form.Control id="nickname" required value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.password} autoFocus />
-                        </Form.Group>
-                        <Form.Group className="mb-3 position-relative">
-                          <Form.Label htmlFor="password">{t('loginPage.password')}</Form.Label>
-                          <Form.Control id="password" required value={values.password} onChange={handleChange} type="password" name="password" isInvalid={!!errors.password} />
-                          <Form.Control.Feedback type="invalid" tooltip>{errors.password}</Form.Control.Feedback>
-                        </Form.Group>
-                        <Button type="submit" className="w-100" variant="outline-primary">{t('loginPage.button')}</Button>
-                      </Form>
-                    )}
-                  </Formik>
-                </Col>
-              </Card.Body>
-              <Card.Footer className="p-4">
-                <div className="text-center">
-                  <span>
-                    {t('loginPage.footer.text')}
-                    {' '}
-                    <Link to="/signup">{t('loginPage.footer.link')}</Link>
-                  </span>
-                </div>
-              </Card.Footer>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    )
+    <Container className="mb-auto mt-auto">
+      <Row className="justify-content-center">
+        <Col xs="12" md="8" xxl="8">
+          <Card className="shadow-sm">
+            <Card.Body className="row">
+              <Col xs="12" md="6" className="d-flex align-items-center justify-content-center">
+                <Image src="login.jpeg" alt={t('loginPage.title')} />
+              </Col>
+              <Col xs="12" md="6">
+                <Formik
+                  initialValues={{ nickname: '', password: '' }}
+                  onSubmit={handleFormSubmit}
+                >
+                  {({
+                    handleSubmit, handleChange, values, errors,
+                  }) => (
+                    <Form onSubmit={handleSubmit} className="form">
+                      <h1>{t('loginPage.title')}</h1>
+                      <Form.Group className="mb-3">
+                        <Form.Label htmlFor="nickname">{t('loginPage.nickname')}</Form.Label>
+                        <Form.Control id="nickname" required value={values.nickname} onChange={handleChange} type="text" name="nickname" isInvalid={!!errors.password} autoFocus />
+                      </Form.Group>
+                      <Form.Group className="mb-3 position-relative">
+                        <Form.Label htmlFor="password">{t('loginPage.password')}</Form.Label>
+                        <Form.Control id="password" required value={values.password} onChange={handleChange} type="password" name="password" isInvalid={!!errors.password} />
+                        <Form.Control.Feedback type="invalid" tooltip>{errors.password}</Form.Control.Feedback>
+                      </Form.Group>
+                      <Button type="submit" className="w-100" variant="outline-primary">{t('loginPage.button')}</Button>
+                    </Form>
+                  )}
+                </Formik>
+              </Col>
+            </Card.Body>
+            <Card.Footer className="p-4">
+              <div className="text-center">
+                <span>
+                  {t('loginPage.footer.text')}
+                  {' '}
+                  <Link to="/signup">{t('loginPage.footer.link')}</Link>
+                </span>
+              </div>
+            </Card.Footer>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
