@@ -31,7 +31,7 @@ const Login = () => {
     if (data) {
       dispatch(setUserData({ nickname, token: data.token }));
       logIn(data.token, nickname);
-      return navigate(appPaths.home());
+      navigate(appPaths.home());
     }
     if (error) {
       switch (error.status) {
@@ -48,7 +48,6 @@ const Login = () => {
         }
       }
     }
-    return null;
   };
   return (
     (
