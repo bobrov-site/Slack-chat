@@ -28,9 +28,10 @@ const NewChannel = () => {
   const handleFormSubmit = async (values) => {
     try {
       const { channelName } = values;
-      const data = {};
-      data.name = filter.clean(channelName);
-      data.removable = true;
+      const data = {
+        name: filter.clean(channelName),
+        removable: true,
+      };
       const response = await addChannel(data);
       const { id, name } = response.data;
       dispatch(changeChannel({ id, name }));
