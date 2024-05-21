@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
@@ -10,7 +9,6 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { setUserData } from '../store/slices/appSlice';
 import { useLoginMutation } from '../api/auth';
 import { appPaths } from '../routes';
 import useAuth from '../hooks';
@@ -19,7 +17,6 @@ const Login = () => {
   const { t } = useTranslation();
   const { logIn } = useAuth();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [login] = useLoginMutation();
   const handleFormSubmit = async (values, { setErrors }) => {
     const { nickname, password } = values;
@@ -29,7 +26,6 @@ const Login = () => {
     };
     const { data, error } = await login(user);
     if (data) {
-      dispatch(setUserData({ nickname, token: data.token }));
       logIn(data.token, nickname);
       navigate(appPaths.home());
     }
