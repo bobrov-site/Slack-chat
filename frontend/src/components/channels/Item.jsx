@@ -11,8 +11,8 @@ const Item = ({ data }) => {
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
   const variantButton = data.id === currentChannelId ? 'secondary' : 'light';
   const dispatch = useDispatch();
-  const switchChannel = (channel) => {
-    const { id, name } = channel;
+  const switchChannel = () => {
+    const { id, name } = data;
     if (id !== currentChannelId) {
       dispatch(changeChannel({ id, name }));
     }
@@ -24,7 +24,7 @@ const Item = ({ data }) => {
     <Nav.Item>
       {data.removable ? (
         <Dropdown as={ButtonGroup} drop="down" className="w-100">
-          <Button onClick={() => switchChannel(data)} className="w-100 rounded-0 text-start text-truncate" variant={variantButton}>{`# ${data.name}`}</Button>
+          <Button onClick={() => switchChannel()} className="w-100 rounded-0 text-start text-truncate" variant={variantButton}>{`# ${data.name}`}</Button>
 
           <Dropdown.Toggle as={Button} className="text-end" split variant={variantButton} id={`dropdown-split-button${data.id}`}>
             <span className="visually-hidden">{t('dropdown.toggle')}</span>
