@@ -2,29 +2,16 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Formik } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import * as filter from 'leo-profanity';
-import { useAddChannelMutation, useGetChannelsQuery } from '../../api/channels';
-import { setChannelModal, changeChannel } from '../../store/slices/appSlice';
+import { useAddChannelMutation } from '../../api/channels';
+import { changeChannel } from '../../store/slices/appSlice';
 
-const NewChannel = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const showModal = useSelector((state) => state.app.showModal);
-  const { data: channels = [] } = useGetChannelsQuery();
+const NewChannel = (children) => {
+  const {
+    handleCloseModal, showModal, dispatch, t, channelNameSchema,
+  } = children;
   const [addChannel] = useAddChannelMutation();
-  const channelsNames = channels.map((channel) => channel.name);
-  const channelNameSchema = Yup.object().shape({
-    channelName: Yup.string().notOneOf(channelsNames, t('form.errors.channelExists')).min(3, t('form.errors.range')).max(20, t('form.errors.range'))
-      .required(t('form.errors.required')),
-  });
-
-  const handleCloseModal = () => {
-    dispatch(setChannelModal({ id: '', name: '', modalName: '' }));
-  };
   const handleFormSubmit = async (values) => {
     try {
       const { channelName } = values;

@@ -1,21 +1,14 @@
 import Modal from 'react-bootstrap/Modal';
-import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRemoveChannelMutation } from '../../api/channels';
-import { changeChannel, setChannelModal } from '../../store/slices/appSlice';
+import { changeChannel } from '../../store/slices/appSlice';
 
-const DeleteChannel = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const showModal = useSelector((state) => state.app.showModal);
-  const currentChannelId = useSelector((state) => state.app.currentChannelId);
-  const modalChannelId = useSelector((state) => state.app.modalChannelId);
+const DeleteChannel = (children) => {
+  const {
+    handleCloseModal, showModal, currentChannelId, modalChannelId, dispatch, t,
+  } = children;
   const [removeChannel] = useRemoveChannelMutation();
-  const handleCloseModal = () => {
-    dispatch(setChannelModal({ id: '', name: '', modalName: '' }));
-  };
   const deleteChannel = async (id) => {
     try {
       await removeChannel(id).unwrap();
