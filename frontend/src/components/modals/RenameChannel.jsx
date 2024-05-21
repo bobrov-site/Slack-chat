@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useGetChannelsQuery, useUpdateChannelMutation } from '../../api/channels';
 import { setChannelModal, changeChannel } from '../../store/slices/appSlice';
 
@@ -44,7 +44,11 @@ const RenameChannel = () => {
       console.error(e);
     }
   };
-  console.log(input.current); // undefined
+  useEffect(() => {
+    if (input.current) {
+      input.current.focus();
+    }
+  }, []);
   return (
     <Modal show={showModal === 'rename-channel'} onHide={handleCloseModal}>
       <Modal.Header closeButton>
