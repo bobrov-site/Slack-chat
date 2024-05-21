@@ -19,8 +19,8 @@ const NewChannel = (children) => {
         name: filter.clean(channelName),
         removable: true,
       };
-      const response = await addChannel(data).unwrap();
-      const { id, name } = response.data;
+      const payload = await addChannel(data).unwrap();
+      const { id, name } = payload;
       dispatch(changeChannel({ id, name }));
       handleCloseModal();
       toast.success(t('toast.addChannel'));
