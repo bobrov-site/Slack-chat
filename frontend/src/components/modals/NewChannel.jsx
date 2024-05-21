@@ -42,7 +42,7 @@ const NewChannel = () => {
     }
   };
   return (
-    <Modal show={showModal === 'new-channel'} onHide={handleCloseModal}>
+    <Modal show={showModal === 'adding'} onHide={handleCloseModal}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.titleAddChannel')}</Modal.Title>
       </Modal.Header>

@@ -30,8 +30,8 @@ const Item = ({ data }) => {
             <span className="visually-hidden">{t('dropdown.toggle')}</span>
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => handleShowModal('delete-channel', data)}>{t('channels.dropdown.delete')}</Dropdown.Item>
-            <Dropdown.Item onClick={() => handleShowModal('rename-channel', data)}>{t('channels.dropdown.rename')}</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleShowModal('removing', data)}>{t('channels.dropdown.delete')}</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleShowModal('renaming', data)}>{t('channels.dropdown.rename')}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       ) : (

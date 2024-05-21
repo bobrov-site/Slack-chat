@@ -50,7 +50,7 @@ const RenameChannel = () => {
     }
   }, []);
   return (
-    <Modal show={showModal === 'rename-channel'} onHide={handleCloseModal}>
+    <Modal show={showModal === 'renaming'} onHide={handleCloseModal}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.titleRenameChannel')}</Modal.Title>
       </Modal.Header>

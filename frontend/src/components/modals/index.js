@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import NewChannel from './NewChannel';
 import RenameChannel from './RenameChannel';
 import DeleteChannel from './DeleteChannel';
@@ -8,6 +9,13 @@ const modals = {
   removing: DeleteChannel,
 };
 
-const getModal = (modalName) => modals[modalName];
+const ModalContainer = () => {
+  const showModal = useSelector((state) => state.app.showModal);
+  if (!showModal) {
+    return null;
+  }
+  const ModalComponent = modals[showModal];
+  return <ModalComponent />;
+};
 
-export default getModal;
+export default ModalContainer;

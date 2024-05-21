@@ -29,7 +29,7 @@ const DeleteChannel = () => {
     }
   };
   return (
-    <Modal show={showModal === 'delete-channel'} onHide={handleCloseModal}>
+    <Modal show={showModal === 'removing'} onHide={handleCloseModal}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.titleDeleteChannel')}</Modal.Title>
       </Modal.Header>
