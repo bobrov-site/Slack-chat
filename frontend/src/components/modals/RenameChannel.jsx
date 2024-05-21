@@ -7,9 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useRef } from 'react';
-import { useGetChannelsQuery, useUpdateChannelMutation, channelsApi } from '../../api/channels';
+import { useGetChannelsQuery, useUpdateChannelMutation } from '../../api/channels';
 import { setChannelModal, changeChannel } from '../../store/slices/appSlice';
-import socket from '../../socket';
 
 const RenameChannel = () => {
   const { t } = useTranslation();
@@ -45,26 +44,11 @@ const RenameChannel = () => {
       console.error(e);
     }
   };
-
   useEffect(() => {
     if (input.current) {
       input.current.focus();
     }
   });
-
-  useEffect(() => {
-    const handleRenameChannel = ({ id, name }) => {
-      dispatch(channelsApi.util.updateQueryData('getChannels', undefined, (draft) => {
-        const channel = draft;
-        const index = channel.findIndex((curChannels) => curChannels.id === id);
-        channel[index].name = name;
-      }));
-    };
-    socket.on('renameChannel', handleRenameChannel);
-    return () => {
-      socket.off('renameChannel');
-    };
-  }, [dispatch]);
   return (
     <Modal show={showModal === 'rename-channel'} onHide={handleCloseModal}>
       <Modal.Header closeButton>

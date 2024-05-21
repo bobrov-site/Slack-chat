@@ -3,10 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { useEffect } from 'react';
-import { useRemoveChannelMutation, channelsApi } from '../../api/channels';
+import { useRemoveChannelMutation } from '../../api/channels';
 import { changeChannel, setChannelModal } from '../../store/slices/appSlice';
-import socket from '../../socket';
 
 const DeleteChannel = () => {
   const { t } = useTranslation();
@@ -30,16 +28,6 @@ const DeleteChannel = () => {
       console.error(e);
     }
   };
-
-  useEffect(() => {
-    const handleRemoveChannel = ({ id }) => {
-      dispatch(channelsApi.util.updateQueryData('getChannels', undefined, (draft) => draft.filter((curChannels) => curChannels.id !== id)));
-    };
-    socket.on('removeChannel', handleRemoveChannel);
-    return () => {
-      socket.off('removeChannel');
-    };
-  }, [dispatch]);
   return (
     <Modal show={showModal === 'delete-channel'} onHide={handleCloseModal}>
       <Modal.Header closeButton>

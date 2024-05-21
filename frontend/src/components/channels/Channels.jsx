@@ -41,11 +41,25 @@ const Channels = () => {
         draft.push(channel);
       }));
     };
+    const handleRemoveChannel = ({ id }) => {
+      dispatch(channelsApi.util.updateQueryData('getChannels', undefined, (draft) => draft.filter((curChannels) => curChannels.id !== id)));
+    };
+    const handleRenameChannel = ({ id, name }) => {
+      dispatch(channelsApi.util.updateQueryData('getChannels', undefined, (draft) => {
+        const channel = draft;
+        const index = channel.findIndex((curChannels) => curChannels.id === id);
+        channel[index].name = name;
+      }));
+    };
     socket.on('newChannel', handleNewChannel);
+    socket.on('removeChannel', handleRemoveChannel);
+    socket.on('renameChannel', handleRenameChannel);
     return () => {
       socket.off('newChannel');
+      socket.off('removeChannel');
+      socket.off('renameChannel');
     };
-  }, [dispatch, logOut]);
+  }, [dispatch]);
   return (
     <Col xs="4" md="2" className="border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
