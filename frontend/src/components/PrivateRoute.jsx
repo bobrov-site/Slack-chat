@@ -1,19 +1,13 @@
-import { useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { appPaths } from '../routes';
 
 const PrivateRoute = ({ children }) => {
   const { token } = useSelector((state) => state.app);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!token) {
-      navigate(appPaths.login());
-    }
-  }, [token, navigate]);
-
-  return token ? children : null;
+  if (!token) {
+    return <Navigate to={appPaths.login()} />;
+  }
+  return children;
 };
 
 export default PrivateRoute;
