@@ -9,7 +9,7 @@ import { changeChannel, setChannelModal } from '../../store/slices/appSlice';
 const Item = ({ data }) => {
   const { t } = useTranslation();
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
-  const getVariantButton = (channel) => (channel.id === currentChannelId ? 'secondary' : 'light');
+  const variantButton = data.id === currentChannelId ? 'secondary' : 'light';
   const dispatch = useDispatch();
   const switchChannel = (channel) => {
     const { id, name } = channel;
@@ -24,9 +24,9 @@ const Item = ({ data }) => {
     <Nav.Item>
       {data.removable ? (
         <Dropdown as={ButtonGroup} drop="down" className="w-100">
-          <Button onClick={() => switchChannel(data)} className="w-100 rounded-0 text-start text-truncate" variant={getVariantButton(data)}>{`# ${data.name}`}</Button>
+          <Button onClick={() => switchChannel(data)} className="w-100 rounded-0 text-start text-truncate" variant={variantButton}>{`# ${data.name}`}</Button>
 
-          <Dropdown.Toggle as={Button} className="text-end" split variant={getVariantButton(data)} id={`dropdown-split-button${data.id}`}>
+          <Dropdown.Toggle as={Button} className="text-end" split variant={variantButton} id={`dropdown-split-button${data.id}`}>
             <span className="visually-hidden">{t('dropdown.toggle')}</span>
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -37,7 +37,7 @@ const Item = ({ data }) => {
       ) : (
         <Button
           as={ButtonGroup}
-          variant={getVariantButton(data)}
+          variant={variantButton}
           className="w-100 text-start rounded-0 text-truncate"
           onClick={() => switchChannel(data)}
         >
