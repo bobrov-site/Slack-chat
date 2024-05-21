@@ -2,8 +2,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  token: null,
-  username: '',
+  token: localStorage.getItem('token') ? localStorage.getItem('token') : null,
+  username: localStorage.getItem('nickname') ? localStorage.getItem('nickname') : '',
   currentChannelId: '1',
   currentChannelName: 'general',
   modalChannelId: '',
