@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   useGetChannelsQuery, channelsApi,
 } from '../../api/channels';
-import { setChannelModal, setUserData } from '../../store/slices/appSlice';
+import { setChannelModal } from '../../store/slices/appSlice';
 import socket from '../../socket';
 import Item from './Item';
 import { appPaths } from '../../routes';
@@ -34,7 +34,7 @@ const Channels = () => {
       logOut();
       navigate(appPaths.login());
     }
-  }, [channelError, navigate, dispatch, logOut]);
+  }, [channelError, navigate, logOut]);
 
   useEffect(() => {
     const handleNewChannel = (channel) => {
