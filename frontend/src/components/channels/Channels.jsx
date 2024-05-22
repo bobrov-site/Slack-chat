@@ -30,7 +30,7 @@ const Channels = () => {
   };
 
   useEffect(() => {
-    if (channelError) {
+    if (channelError?.status === 401) {
       logOut();
       dispatch(setUserData({ nickname: '', token: null }));
       navigate(appPaths.login());
