@@ -4,10 +4,10 @@ import { toast } from 'react-toastify';
 import { useRemoveChannelMutation } from '../../api/channels';
 import { changeChannel } from '../../store/slices/appSlice';
 
-const DeleteChannel = (children) => {
+const DeleteChannel = (props) => {
   const {
     handleCloseModal, showModal, currentChannelId, modalChannelId, dispatch, t,
-  } = children;
+  } = props;
   const [removeChannel] = useRemoveChannelMutation();
   const deleteChannel = async (id) => {
     try {

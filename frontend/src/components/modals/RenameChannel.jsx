@@ -8,10 +8,10 @@ import { useEffect, useRef } from 'react';
 import { useUpdateChannelMutation } from '../../api/channels';
 import { changeChannel } from '../../store/slices/appSlice';
 
-const RenameChannel = (children) => {
+const RenameChannel = (props) => {
   const {
     handleCloseModal, showModal, modalChannelId, dispatch, t, channelNameSchema,
-  } = children;
+  } = props;
   const input = useRef();
   const [updateChannel] = useUpdateChannelMutation();
   const modalChannelName = useSelector((state) => state.app.modalChannelName);

@@ -7,10 +7,10 @@ import * as filter from 'leo-profanity';
 import { useAddChannelMutation } from '../../api/channels';
 import { changeChannel } from '../../store/slices/appSlice';
 
-const NewChannel = (children) => {
+const NewChannel = (props) => {
   const {
     handleCloseModal, showModal, dispatch, t, channelNameSchema,
-  } = children;
+  } = props;
   const [addChannel] = useAddChannelMutation();
   const handleFormSubmit = async (values) => {
     try {
