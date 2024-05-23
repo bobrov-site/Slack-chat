@@ -23,10 +23,10 @@ const MessagesForm = () => {
       };
       await addMessage(data);
       resetForm();
-      setSubmitting(false);
     } catch (e) {
-      setSubmitting(false);
       console.error(e);
+    } finally {
+      setSubmitting(false);
     }
   };
   return (
