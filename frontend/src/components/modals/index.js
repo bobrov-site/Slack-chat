@@ -28,10 +28,10 @@ const ModalContainer = () => {
     dispatch(setChannelModal({ id: '', name: '', modalName: '' }));
   };
   const showModal = useSelector((state) => state.app.showModal);
-  if (!showModal) {
+  const ModalComponent = modals[showModal];
+  if (!ModalComponent) {
     return null;
   }
-  const ModalComponent = modals[showModal];
   return (
     <ModalComponent
       handleCloseModal={handleCloseModal}
