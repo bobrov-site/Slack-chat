@@ -35,6 +35,7 @@ const RenameChannel = (props) => {
   useEffect(() => {
     if (input.current) {
       input.current.focus();
+      input.current.select();
     }
   }, []);
   return (
