@@ -24,10 +24,6 @@ const Channels = () => {
   const handleShowModal = (modalName, channel = { id: '', name: '' }) => {
     dispatch(setChannelModal({ id: channel.id, name: channel.name, modalName }));
   };
-  const renderModal = () => {
-    const Component = ModalContainer;
-    return <Component />;
-  };
 
   useEffect(() => {
     if (channelError?.status === 401) {
@@ -74,7 +70,7 @@ const Channels = () => {
           <Item key={channel.id} data={channel} />
         ))}
       </Nav>
-      {renderModal()}
+      <ModalContainer />
     </Col>
   );
 };
